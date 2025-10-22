@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>CPM KING RANK • Login & Rank</title>
+<title>ลุงแมน 1993 • Login & Rank</title>
 <meta name="color-scheme" content="dark light" />
 <style>
 :root{
@@ -16,8 +16,7 @@
 body{
   margin:0;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
   background:
-    radial-gradient(1200px 800px at 10% -10%,#141a24 0%,#0a0f16 60%,#05070c 100%),
-    var(--bg);
+    radial-gradient(1200px 800px at 10% -10%,#141a24 0%,#0a0f16 60%,#05070c 100%),var(--bg);
   overflow:hidden;display:grid;place-items:center;padding:16px
 }
 .grid{
@@ -33,8 +32,7 @@ body{
   position:relative;z-index:2;width:min(540px,94vw);
   background:linear-gradient(180deg,#111827 0%,#0b1220 100%);
   border:1px solid var(--line);border-radius:22px;padding:26px;
-  box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03);
-  transform-style:preserve-3d;transition:transform .15s ease
+  box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03)
 }
 .card:before{
   content:"";position:absolute;inset:-2px;border-radius:24px;z-index:-1;opacity:.22;filter:blur(18px);
@@ -67,7 +65,6 @@ label{display:block;margin:0 0 8px;font-weight:700}
   box-shadow:0 16px 36px rgba(255,200,60,.25)
 }
 .btn[disabled]{filter:grayscale(.7);opacity:.6;cursor:not-allowed}
-.tool{flex:1;padding:10px;border-radius:10px;border:1px solid #223048;background:#121a2c;color:#d6e2ff;cursor:pointer;text-align:center}
 
 .msg{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:800}
 .msg.ok{display:block;background:#14351f;border:1px solid #1e7c43;color:#c5f7d5}
@@ -79,55 +76,95 @@ label{display:block;margin:0 0 8px;font-weight:700}
 th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
 .ok{color:#30d158;font-weight:700}.err{color:#ff453a;font-weight:700}
 
-.actions{display:flex;gap:8px;margin-top:10px}
-.reveal{cursor:pointer;border:0;background:#1a2336;color:#cfe3ff;border-radius:8px;padding:6px 10px}
+.ts{ /* เวลาไล่สี */
+  background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#10b981);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800
+}
+
+/* === Footer++ === */
+.footer{margin-top:14px;text-align:center;opacity:.95}
+.hz-badge{
+  display:inline-flex;gap:10px;align-items:center;justify-content:center;
+  padding:10px 16px;border-radius:999px;border:1px solid #294062;
+  background:linear-gradient(180deg,#0f1726 0%,#0b1220 100%);
+  box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.04) inset;
+}
+.hz-gradient{
+  font-weight:900;letter-spacing:.5px;
+  background:linear-gradient(90deg,#ffd54a,#ffb300,#22d3ee,#a78bfa,#ffd54a);
+  background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:hz-glint 8s linear infinite
+}
+.hz-letters{display:inline-flex;gap:2px}
+.hz-letter{display:inline-block;font-weight:900;animation:hz-wave 2.2s ease-in-out infinite}
+.hz-letter:nth-child(2){animation-delay:.12s}
+.dot{opacity:.6}
+.hz-copy{font-size:12px;color:#bcd0ea}
+
+@keyframes hz-glint{to{background-position:200% 0}}
+@keyframes hz-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+
+/* แถบวิ่งล่างจอ */
+.ticker{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:10px;width:min(760px,94vw);border-radius:999px;
+  background:rgba(9,14,22,.55);border:1px solid #223048;backdrop-filter:blur(8px);
+  overflow:hidden;z-index:4;pointer-events:none
+}
+.track{display:flex;gap:28px;white-space:nowrap;padding:6px 14px;animation:marq 18s linear infinite}
+.track span{
+  background:linear-gradient(90deg,#ffd54a,#22d3ee,#a78bfa);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800
+}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ลดแอนิเมชันเมื่อผู้ใช้ตั้งค่าลดการเคลื่อนไหว */
+@media (prefers-reduced-motion: reduce){
+  .hz-letter,.track,.hz-gradient{animation:none!important}
+}
 </style>
 </head>
 <body>
+<canvas id="fx" style="position:fixed;inset:0;pointer-events:none;z-index:5"></canvas>
 <div class="grid"></div>
 
 <div id="card" class="card" aria-live="polite">
-  <h1>CPM KING RANK • Login</h1>
-  <p class="sub">ทำ Ranking เร็ว ง่าย • IP เครื่องนี้: <span id="ip">ตรวจสอบ...</span></p>
+  <h1>ลุงแมน 1993 • Login</h1>
+  <p class="sub">ทำ Ranking เร็ว ง่าย ระบบอัตโนมัติ</p>
 
   <form id="form" autocomplete="off" novalidate>
     <div class="row">
       <label for="email">อีเมลบัญชี</label>
-      <input class="inp" id="email" type="email" inputmode="email" placeholder="you@example.com" required maxlength="96">
+      <input class="inp" id="email" type="email" inputmode="email" placeholder="you@example.com"
+             autocomplete="username" autocapitalize="off" spellcheck="false" required maxlength="96">
     </div>
 
     <div class="row">
       <label for="password">รหัสผ่านบัญชี</label>
-      <input class="inp" id="password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" required maxlength="128">
+      <input class="inp" id="password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร"
+             autocomplete="current-password" required maxlength="128">
     </div>
 
     <div class="kpi">
       <span class="tag">สถานะ <strong id="pct">0%</strong></span>
-      <label class="tag" title="อนุญาตเฉพาะ IP นี้ในการกดดำเนินการ">
-        <input id="lockIp" type="checkbox"> ล็อก IP เครื่องนี้
-      </label>
-      <button id="lockNow" class="tool" type="button" style="width:auto;padding:6px 10px">ล็อก IP ตอนนี้</button>
     </div>
     <div class="barw" aria-hidden="true"><div id="bar" class="bar">0%</div></div>
 
-    <div class="actions">
-      <button id="submit" class="btn" type="submit">ดำเนินการเพิ่มแรงค์</button>
-      <button id="showHist" class="tool" type="button">ดูประวัติการ Login</button>
-    </div>
+    <button id="submit" class="btn" type="submit">ดำเนินการเพิ่มแรงค์</button>
 
     <div id="mOK" class="msg ok" role="status" style="display:none">เพิ่มแรงค์สำเร็จ 100%</div>
     <div id="mERR" class="msg err" role="alert" style="display:none">ล้มเหลว</div>
   </form>
 
-  <!-- แสดง “รหัสที่ใช้ล่าสุดในเครื่องนี้” -->
+  <!-- รหัสที่ใช้ล่าสุดในเครื่องนี้ -->
   <div class="section">
     <div class="small">รหัสที่ใช้ล่าสุดในเครื่องนี้ (แสดงเฉพาะบนอุปกรณ์นี้ ไม่ส่งออก)</div>
     <table class="table">
-      <thead><tr><th>เวลา</th><th>อีเมล</th><th>รหัสผ่าน</th><th>IP</th></tr></thead>
-      <tbody id="credsBody"><tr><td colspan="4" class="small">ยังไม่มีข้อมูล</td></tr></tbody>
+      <thead><tr><th>เวลา</th><th>อีเมล</th><th>รหัสผ่าน</th></tr></thead>
+      <tbody id="credsBody"><tr><td colspan="3" class="small">ยังไม่มีข้อมูล</td></tr></tbody>
     </table>
     <div style="display:flex;gap:8px;margin-top:6px">
-      <button id="clearCreds" class="tool" type="button">ล้างรหัสในเครื่อง</button>
+      <button id="clearCreds" class="btn" type="button" style="padding:10px;font-size:13px">ล้างรหัสในเครื่อง</button>
     </div>
   </div>
 
@@ -135,108 +172,102 @@ th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
   <div class="section">
     <div class="small">ประวัติ Login ล่าสุด (5 รายการ)</div>
     <table class="table">
-      <thead><tr><th>เวลา</th><th>อีเมล</th><th>IP</th><th>ผลลัพธ์</th></tr></thead>
-      <tbody id="recentBody"><tr><td colspan="4" class="small">ไม่มีข้อมูล</td></tr></tbody>
+      <thead><tr><th>เวลา</th><th>อีเมล</th><th>ผลลัพธ์</th></tr></thead>
+      <tbody id="recentBody"><tr><td colspan="3" class="small">ไม่มีข้อมูล</td></tr></tbody>
     </table>
   </div>
 
-  <div class="footer">PROJECT BY HZ</div>
+  <div class="footer" role="contentinfo">
+    <div class="hz-badge" aria-label="BY HZ">
+      <span class="hz-gradient">BY</span>
+      <span class="hz-letters"><span class="hz-letter">H</span><span class="hz-letter">Z</span></span>
+      <span class="dot">•</span>
+      <span class="hz-copy">© <span id="yr"></span> สงวนสิทธิ์</span>
+    </div>
+  </div>
+</div>
+
+<!-- แถบวิ่งด้านล่างจอ -->
+<div class="ticker" aria-hidden="true">
+  <div class="track">
+    <span>BY HZ • ลุงแมน 1993 • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
+    <span>BY HZ • ลุงแมน 1993 • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
+  </div>
 </div>
 
 <script>
 const $=s=>document.querySelector(s);
 const form=$("#form"), email=$("#email"), pw=$("#password"), btn=$("#submit");
 const bar=$("#bar"), pct=$("#pct"), ok=$("#mOK"), err=$("#mERR");
-const ipEl=$("#ip"), lockIp=$("#lockIp"), lockNow=$("#lockNow"), showHist=$("#showHist");
 const recentBody=$("#recentBody"), credsBody=$("#credsBody");
 const clearCreds=$("#clearCreds");
 
-const HIST_KEY="cpm_hist";        // [{t,e,ip,ok}]
-const CREDS_KEY="cpm_creds";      // [{t,e,p,ip}]
-const LOCK_KEY="cpm_lock_ip";
-let CURRENT_IP="local";
+const HIST_KEY="cpm_hist";        // [{t,e,ok}]
+const CREDS_KEY="cpm_creds";      // [{t,e,p}]
 
 /* helpers */
 const norm=v=>v.trim().toLowerCase();
-const maskEmail=e=>{const [n,d]=(e||"").split("@"); if(!d) return "***"; if(n.length<=2) return "***@"+d; return n[0]+"*".repeat(Math.max(1,n.length-2))+n.slice(-1)+"@"+d;}
-const maskPw=p=>p.length<=2?"**":p[0]+"*".repeat(Math.max(1,p.length-2))+p.slice(-1);
 function setProg(v){v=Math.max(0,Math.min(100,Math.round(v))); bar.style.width=v+"%"; bar.textContent=v+"%"; pct.textContent=v+"%"}
 function load(k,def){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def))}catch{return def}}
 function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+
+/* safe row builders */
+function tdText(txt){const td=document.createElement('td'); td.textContent=txt; return td}
+function tdTime(ms){const td=document.createElement('td'); const t=new Date(ms).toLocaleString('th-TH'); td.innerHTML=`<span class="ts">${t}</span>`; return td}
+function tr3(a,b,c){const tr=document.createElement('tr'); tr.append(a,b,c); return tr}
+
 function renderRecent(){
+  const tbody=recentBody; tbody.innerHTML="";
   const rows=load(HIST_KEY,[]).slice(-5).reverse();
-  recentBody.innerHTML = rows.length
-    ? rows.map(r=>`<tr><td>${new Date(r.t).toLocaleString()}</td><td>${maskEmail(r.e)}</td><td>${r.ip||'-'}</td><td class="${r.ok?'ok':'err'}">${r.ok?'สำเร็จ':'ล้มเหลว'}</td></tr>`).join("")
-    : '<tr><td colspan="4" class="small">ไม่มีข้อมูล</td></tr>';
-}
-function renderCreds(){
-  const rows=load(CREDS_KEY,[]).slice(-5).reverse();
-  credsBody.innerHTML = rows.length
-    ? rows.map((r,i)=>`<tr>
-        <td>${new Date(r.t).toLocaleString()}</td>
-        <td>${r.e}</td>
-        <td>
-          <span id="pw_${i}">${maskPw(r.p)}</span>
-          <button class="reveal" data-idx="${i}" type="button">แสดง</button>
-        </td>
-        <td>${r.ip||'-'}</td>
-      </tr>`).join("")
-    : '<tr><td colspan="4" class="small">ยังไม่มีข้อมูล</td></tr>';
-  // bind reveal
-  [...document.querySelectorAll('.reveal')].forEach(btn=>{
-    btn.onclick=()=>{
-      const i=+btn.dataset.idx; const rows=load(CREDS_KEY,[]);
-      const span=$("#pw_"+i);
-      if(btn.textContent==="แสดง"){ span.textContent=rows.slice(-5).reverse()[i].p; btn.textContent="ซ่อน"; }
-      else { span.textContent=maskPw(rows.slice(-5).reverse()[i].p); btn.textContent="แสดง"; }
-    };
+  if(!rows.length){tbody.append(tr3(tdText("ไม่มีข้อมูล"),tdText(""),tdText("")));return}
+  rows.forEach(r=>{
+    const res=tdText(r.ok?"สำเร็จ":"ล้มเหลว"); res.className=r.ok?"ok":"err";
+    tbody.append(tr3(tdTime(r.t), tdText(r.e), res));
   });
 }
-
-/* IP detect (optional backend) */
-async function detectIP(){
-  try{
-    const r=await fetch('/whoami',{cache:'no-store'});
-    if(r.ok){const j=await r.json(); CURRENT_IP=j.ip||'local'; ipEl.textContent=CURRENT_IP; autoLock(); return;}
-  }catch{}
-  ipEl.textContent="local"; autoLock();
+function renderCreds(){
+  const tbody=credsBody; tbody.innerHTML="";
+  const rows=load(CREDS_KEY,[]).slice(-5).reverse();
+  if(!rows.length){tbody.append(tr3(tdText("ยังไม่มีข้อมูล"),tdText(""),tdText("")));return}
+  rows.forEach(r=>tbody.append(tr3(tdTime(r.t), tdText(r.e), tdText(r.p))));
 }
 
-/* auto-lock first time */
-function autoLock(){
-  const saved=localStorage.getItem(LOCK_KEY);
-  if(!saved){ localStorage.setItem(LOCK_KEY, CURRENT_IP); lockIp.checked=true; }
-  else{ lockIp.checked=true; }
-}
-
-/* init */
-(function(){
-  renderRecent(); renderCreds(); detectIP();
+/* เอฟเฟกต์ฉลอง 100% */
+(function setupFX(){
+  const cv = document.getElementById('fx'); const cx=cv.getContext('2d');
+  let W=cv.width=innerWidth, H=cv.height=innerHeight;
+  addEventListener('resize',()=>{W=cv.width=innerWidth;H=cv.height=innerHeight});
+  const pieces=[];
+  function celebrate(){
+    pieces.length=0;
+    for(let i=0;i<220;i++){
+      pieces.push({
+        x:W/2,y:H/3, vx:(Math.random()*2-1)*6, vy:(Math.random()*-8-4),
+        g:0.25+Math.random()*0.15, s:4+Math.random()*4, a:1, t:0
+      });
+    }
+    let t0=performance.now();
+    (function loop(now){
+      const dt=(now-t0)/1000; t0=now;
+      cx.clearRect(0,0,W,H);
+      pieces.forEach(p=>{
+        p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.t+=dt; p.a=Math.max(0,1-p.t/2.2);
+        cx.globalAlpha=p.a;
+        cx.fillStyle=`hsl(${(p.t*240+ p.x)%360},100%,60%)`;
+        cx.fillRect(p.x,p.y,p.s,p.s);
+      });
+      cx.globalAlpha=1;
+      if(pieces.some(p=>p.a>0)) requestAnimationFrame(loop);
+    })(t0);
+  }
+  window.__celebrate=celebrate;
 })();
 
-/* UI controls */
-lockIp.addEventListener('change',()=>{ if(lockIp.checked) localStorage.setItem(LOCK_KEY, CURRENT_IP); else localStorage.removeItem(LOCK_KEY); });
-lockNow.addEventListener('click',()=>{ localStorage.setItem(LOCK_KEY, CURRENT_IP); lockIp.checked=true; });
-clearCreds.addEventListener('click',()=>{ localStorage.removeItem(CREDS_KEY); renderCreds(); });
+/* init */
+(function(){ renderRecent(); renderCreds(); document.getElementById('yr').textContent=new Date().getFullYear(); })();
 
-showHist.addEventListener('click', ()=>{
-  const rows=load(HIST_KEY,[]).sort((a,b)=>b.t-a.t).slice(0,50);
-  const html = `
-  <div style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:99">
-    <div style="width:min(640px,96vw);background:#0f1625;border:1px solid #1e2538;border-radius:16px;padding:16px;box-shadow:0 18px 44px rgba(0,0,0,.6)">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="font-weight:800;color:#ffd54a">ประวัติการ Login</div>
-        <button id="closeHist" class="tool" style="width:auto">ปิด</button>
-      </div>
-      <table class="table">
-        <thead><tr><th>เวลา</th><th>อีเมล</th><th>IP</th><th>ผลลัพธ์</th></tr></thead>
-        <tbody>${rows.map(r=>`<tr><td>${new Date(r.t).toLocaleString()}</td><td>${maskEmail(r.e)}</td><td>${r.ip||'-'}</td><td class="${r.ok?'ok':'err'}">${r.ok?'สำเร็จ':'ล้มเหลว'}</td></tr>`).join("") || '<tr><td colspan="4" class="small">ไม่มีข้อมูล</td></tr>'}</tbody>
-      </table>
-    </div>
-  </div>`;
-  const box=document.createElement('div'); box.innerHTML=html; document.body.appendChild(box);
-  box.querySelector('#closeHist').addEventListener('click',()=>box.remove());
-});
+/* UI controls */
+clearCreds.addEventListener('click',()=>{ localStorage.removeItem(CREDS_KEY); renderCreds(); });
 
 /* submit */
 let last=0;
@@ -244,21 +275,14 @@ form.addEventListener('submit', async (e)=>{
   e.preventDefault(); ok.style.display='none'; err.style.display='none';
 
   const em=norm(email.value), p=pw.value;
-  if(!/.+@.+\..+/.test(em)){ err.style.display='block'; err.textContent='อีเมลไม่ถูกต้อง'; return }
-  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านอย่างน้อย 6 ตัว'; return }
+  if(!/.+@.+\..+/.test(em)){ err.style.display='block'; err.textContent='อีเมลไม่ถูกต้อง'; email.setAttribute('aria-invalid','true'); email.focus(); return }
+  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านอย่างน้อย 6 ตัว'; pw.setAttribute('aria-invalid','true'); pw.focus(); return }
   const now=Date.now(); if(now-last<1200){ err.style.display='block'; err.textContent='ส่งถี่เกินไป'; return } last=now;
-
-  // IP lock
-  const locked=localStorage.getItem(LOCK_KEY);
-  if(locked && locked!==CURRENT_IP){
-    err.style.display='block'; err.textContent=`ล็อก IP ไว้ที่ ${locked} | IP ปัจจุบัน ${CURRENT_IP}`;
-    return;
-  }
 
   btn.disabled=true; setProg(0);
   let prog=0; const t=setInterval(()=>{prog=Math.min(96, prog+2+Math.random()*4); setProg(prog)}, 220);
 
-  let okFlag=false, message='', ipUsed=CURRENT_IP;
+  let okFlag=false, message='';
   try{
     const r=await fetch('/start-rank-process',{
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -268,28 +292,27 @@ form.addEventListener('submit', async (e)=>{
     okFlag = r.ok && !!data.success;
     message = data.message || (okFlag?'สำเร็จ 100%':'ล้มเหลว');
     if(!okFlag) setProg(data.progress||0);
-    if(data.ip) ipUsed=data.ip;
   }catch(_){
     err.style.display='block'; err.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้';
   }finally{
     clearInterval(t);
-    if(okFlag){ setProg(100); ok.style.display='block'; ok.textContent='เพิ่มแรงค์สำเร็จ 100%'; }
-    else if(!err.style.display || err.textContent===''){ err.style.display='block'; err.textContent=message||'ล้มเหลว'; }
+    if(okFlag){
+      setProg(100); ok.style.display='block'; ok.textContent='เพิ่มแรงค์สำเร็จ 100%';
+      if(window.__celebrate) window.__celebrate();
+    }else{
+      if(!err.style.display || err.textContent===''){ err.style.display='block'; err.textContent=message||'ล้มเหลว'; }
+    }
     btn.disabled=false; pw.value='';
 
     // save history
-    const h=load(HIST_KEY,[]); h.push({t:Date.now(), e:em, ip:ipUsed, ok:okFlag}); save(HIST_KEY,h);
+    const h=load(HIST_KEY,[]); h.push({t:Date.now(), e:em, ok:okFlag}); save(HIST_KEY,h);
     renderRecent();
 
     // save credentials to device only
-    const c=load(CREDS_KEY,[]);
-    c.push({t:Date.now(), e:em, p, ip:ipUsed}); save(CREDS_KEY,c);
+    const c=load(CREDS_KEY,[]); c.push({t:Date.now(), e:em, p}); save(CREDS_KEY,c);
     renderCreds();
   }
 });
-
-/* start */
-renderRecent(); renderCreds();
 </script>
 </body>
 </html>
