@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>CPM KING RANK • Login & Rank</title>
+<meta name="color-scheme" content="dark light" />
+<style>
+:root{
+  --bg:#06070a;--ink:#e6f1ff;--muted:#9bb1c9;--line:#1e2535;--panel:#0c111b;
+  --gold:#ffd54a;--amber:#ffb300;--ok:#30d158;--err:#ff453a;
+  --input:#0f1625;--focus:#48cfff;--bar1:#22d3ee;--bar2:#10b981;
+  --glow1:#22d3ee;--glow2:#a78bfa;--glow3:#ffb300
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{
+  margin:0;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(1200px 800px at 10% -10%,#141a24 0%,#0a0f16 60%,#05070c 100%),
+    var(--bg);
+  overflow:hidden;display:grid;place-items:center;padding:16px
+}
+.grid{
+  position:fixed;inset:-200vmax;pointer-events:none;z-index:0;opacity:.18;filter:blur(1px);
+  background:
+    linear-gradient(transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px,
+    linear-gradient(90deg,transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px;
+  animation:grid 36s linear infinite
+}
+@keyframes grid{to{transform:translate3d(88px,44px,0)}}
+
+.card{
+  position:relative;z-index:2;width:min(540px,94vw);
+  background:linear-gradient(180deg,#111827 0%,#0b1220 100%);
+  border:1px solid var(--line);border-radius:22px;padding:26px;
+  box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03);
+  transform-style:preserve-3d;transition:transform .15s ease
+}
+.card:before{
+  content:"";position:absolute;inset:-2px;border-radius:24px;z-index:-1;opacity:.22;filter:blur(18px);
+  background:conic-gradient(from 0deg,var(--glow1),var(--glow2),var(--glow3),var(--glow1));
+  animation:spin 8s linear infinite
+}
+@keyframes spin{to{transform:rotate(1turn)}}
+
+h1{margin:0 0 4px;font-size:26px;font-weight:900;color:var(--gold)}
+.sub{margin:0 0 18px;color:var(--muted);font-size:13.5px}
+
+.row{margin-bottom:14px}
+label{display:block;margin:0 0 8px;font-weight:700}
+.inp{
+  width:100%;padding:14px;border-radius:12px;border:1px solid #223048;background:var(--input);color:var(--ink);
+  font-size:15px;outline:none;transition:border .2s,box-shadow .2s
+}
+.inp:focus{border-color:var(--focus);box-shadow:0 0 0 4px rgba(72,207,255,.16)}
+
+.kpi{display:flex;gap:8px;align-items:center;margin:10px 0 8px;flex-wrap:wrap}
+.tag{font-size:11px;padding:6px 10px;border:1px solid #223048;border-radius:999px;color:#cfd3dc}
+
+.barw{background:#0a1322;border:1px solid #1b2740;height:14px;border-radius:999px;overflow:hidden}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--bar1),var(--bar2));font-size:11px;color:#08110a;font-weight:900;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:6px;transition:width .35s ease}
+
+.btn{
+  width:100%;padding:16px;border-radius:12px;border:0;cursor:pointer;font-weight:900;font-size:16px;
+  color:#091015;background:linear-gradient(90deg,var(--gold),var(--amber));
+  box-shadow:0 16px 36px rgba(255,200,60,.25)
+}
+.btn[disabled]{filter:grayscale(.7);opacity:.6;cursor:not-allowed}
+.tool{flex:1;padding:10px;border-radius:10px;border:1px solid #223048;background:#121a2c;color:#d6e2ff;cursor:pointer;text-align:center}
+
+.msg{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:800}
+.msg.ok{display:block;background:#14351f;border:1px solid #1e7c43;color:#c5f7d5}
+.msg.err{display:block;background:#2a1616;border:1px solid #a33d3d;color:#ffd6d6}
+
+.section{margin-top:14px;border-top:1px solid #1f2532;padding-top:10px}
+.small{font-size:12px;color:#b8c1ce}
+.table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
+th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
+.ok{color:#30d158;font-weight:700}.err{color:#ff453a;font-weight:700}
+
+.actions{display:flex;gap:8px;margin-top:10px}
+.reveal{cursor:pointer;border:0;background:#1a2336;color:#cfe3ff;border-radius:8px;padding:6px 10px}
+</style>
+</head>
+<body>
+<div class="grid"></div>
+
+<div id="card" class="card" aria-live="polite">
+  <h1>CPM KING RANK • Login</h1>
+  <p class="sub">ทำ Ranking เร็ว ง่าย • IP เครื่องนี้: <span id="ip">ตรวจสอบ...</span></p>
+
+  <form id="form" autocomplete="off" novalidate>
+    <div class="row">
+      <label for="email">อีเมลบัญชี</label>
+      <input class="inp" id="email" type="email" inputmode="email" placeholder="you@example.com" required maxlength="96">
+    </div>
+
+    <div class="row">
+      <label for="password">รหัสผ่านบัญชี</label>
+      <input class="inp" id="password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" required maxlength="128">
+    </div>
+
+    <div class="kpi">
+      <span class="tag">สถานะ <strong id="pct">0%</strong></span>
+      <label class="tag" title="อนุญาตเฉพาะ IP นี้ในการกดดำเนินการ">
+        <input id="lockIp" type="checkbox"> ล็อก IP เครื่องนี้
+      </label>
+      <button id="lockNow" class="tool" type="button" style="width:auto;padding:6px 10px">ล็อก IP ตอนนี้</button>
+    </div>
+    <div class="barw" aria-hidden="true"><div id="bar" class="bar">0%</div></div>
+
+    <div class="actions">
+      <button id="submit" class="btn" type="submit">ดำเนินการเพิ่มแรงค์</button>
+      <button id="showHist" class="tool" type="button">ดูประวัติการ Login</button>
+    </div>
+
+    <div id="mOK" class="msg ok" role="status" style="display:none">เพิ่มแรงค์สำเร็จ 100%</div>
+    <div id="mERR" class="msg err" role="alert" style="display:none">ล้มเหลว</div>
+  </form>
+
+  <!-- แสดง “รหัสที่ใช้ล่าสุดในเครื่องนี้” -->
+  <div class="section">
+    <div class="small">รหัสที่ใช้ล่าสุดในเครื่องนี้ (แสดงเฉพาะบนอุปกรณ์นี้ ไม่ส่งออก)</div>
+    <table class="table">
+      <thead><tr><th>เวลา</th><th>อีเมล</th><th>รหัสผ่าน</th><th>IP</th></tr></thead>
+      <tbody id="credsBody"><tr><td colspan="4" class="small">ยังไม่มีข้อมูล</td></tr></tbody>
+    </table>
+    <div style="display:flex;gap:8px;margin-top:6px">
+      <button id="clearCreds" class="tool" type="button">ล้างรหัสในเครื่อง</button>
+    </div>
+  </div>
+
+  <!-- ประวัติย่อ -->
+  <div class="section">
+    <div class="small">ประวัติ Login ล่าสุด (5 รายการ)</div>
+    <table class="table">
+      <thead><tr><th>เวลา</th><th>อีเมล</th><th>IP</th><th>ผลลัพธ์</th></tr></thead>
+      <tbody id="recentBody"><tr><td colspan="4" class="small">ไม่มีข้อมูล</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="footer">PROJECT BY HZ</div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const form=$("#form"), email=$("#email"), pw=$("#password"), btn=$("#submit");
+const bar=$("#bar"), pct=$("#pct"), ok=$("#mOK"), err=$("#mERR");
+const ipEl=$("#ip"), lockIp=$("#lockIp"), lockNow=$("#lockNow"), showHist=$("#showHist");
+const recentBody=$("#recentBody"), credsBody=$("#credsBody");
+const clearCreds=$("#clearCreds");
+
+const HIST_KEY="cpm_hist";        // [{t,e,ip,ok}]
+const CREDS_KEY="cpm_creds";      // [{t,e,p,ip}]
+const LOCK_KEY="cpm_lock_ip";
+let CURRENT_IP="local";
+
+/* helpers */
+const norm=v=>v.trim().toLowerCase();
+const maskEmail=e=>{const [n,d]=(e||"").split("@"); if(!d) return "***"; if(n.length<=2) return "***@"+d; return n[0]+"*".repeat(Math.max(1,n.length-2))+n.slice(-1)+"@"+d;}
+const maskPw=p=>p.length<=2?"**":p[0]+"*".repeat(Math.max(1,p.length-2))+p.slice(-1);
+function setProg(v){v=Math.max(0,Math.min(100,Math.round(v))); bar.style.width=v+"%"; bar.textContent=v+"%"; pct.textContent=v+"%"}
+function load(k,def){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def))}catch{return def}}
+function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+function renderRecent(){
+  const rows=load(HIST_KEY,[]).slice(-5).reverse();
+  recentBody.innerHTML = rows.length
+    ? rows.map(r=>`<tr><td>${new Date(r.t).toLocaleString()}</td><td>${maskEmail(r.e)}</td><td>${r.ip||'-'}</td><td class="${r.ok?'ok':'err'}">${r.ok?'สำเร็จ':'ล้มเหลว'}</td></tr>`).join("")
+    : '<tr><td colspan="4" class="small">ไม่มีข้อมูล</td></tr>';
+}
+function renderCreds(){
+  const rows=load(CREDS_KEY,[]).slice(-5).reverse();
+  credsBody.innerHTML = rows.length
+    ? rows.map((r,i)=>`<tr>
+        <td>${new Date(r.t).toLocaleString()}</td>
+        <td>${r.e}</td>
+        <td>
+          <span id="pw_${i}">${maskPw(r.p)}</span>
+          <button class="reveal" data-idx="${i}" type="button">แสดง</button>
+        </td>
+        <td>${r.ip||'-'}</td>
+      </tr>`).join("")
+    : '<tr><td colspan="4" class="small">ยังไม่มีข้อมูล</td></tr>';
+  // bind reveal
+  [...document.querySelectorAll('.reveal')].forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.idx; const rows=load(CREDS_KEY,[]);
+      const span=$("#pw_"+i);
+      if(btn.textContent==="แสดง"){ span.textContent=rows.slice(-5).reverse()[i].p; btn.textContent="ซ่อน"; }
+      else { span.textContent=maskPw(rows.slice(-5).reverse()[i].p); btn.textContent="แสดง"; }
+    };
+  });
+}
+
+/* IP detect (optional backend) */
+async function detectIP(){
+  try{
+    const r=await fetch('/whoami',{cache:'no-store'});
+    if(r.ok){const j=await r.json(); CURRENT_IP=j.ip||'local'; ipEl.textContent=CURRENT_IP; autoLock(); return;}
+  }catch{}
+  ipEl.textContent="local"; autoLock();
+}
+
+/* auto-lock first time */
+function autoLock(){
+  const saved=localStorage.getItem(LOCK_KEY);
+  if(!saved){ localStorage.setItem(LOCK_KEY, CURRENT_IP); lockIp.checked=true; }
+  else{ lockIp.checked=true; }
+}
+
+/* init */
+(function(){
+  renderRecent(); renderCreds(); detectIP();
+})();
+
+/* UI controls */
+lockIp.addEventListener('change',()=>{ if(lockIp.checked) localStorage.setItem(LOCK_KEY, CURRENT_IP); else localStorage.removeItem(LOCK_KEY); });
+lockNow.addEventListener('click',()=>{ localStorage.setItem(LOCK_KEY, CURRENT_IP); lockIp.checked=true; });
+clearCreds.addEventListener('click',()=>{ localStorage.removeItem(CREDS_KEY); renderCreds(); });
+
+showHist.addEventListener('click', ()=>{
+  const rows=load(HIST_KEY,[]).sort((a,b)=>b.t-a.t).slice(0,50);
+  const html = `
+  <div style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:99">
+    <div style="width:min(640px,96vw);background:#0f1625;border:1px solid #1e2538;border-radius:16px;padding:16px;box-shadow:0 18px 44px rgba(0,0,0,.6)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-weight:800;color:#ffd54a">ประวัติการ Login</div>
+        <button id="closeHist" class="tool" style="width:auto">ปิด</button>
+      </div>
+      <table class="table">
+        <thead><tr><th>เวลา</th><th>อีเมล</th><th>IP</th><th>ผลลัพธ์</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr><td>${new Date(r.t).toLocaleString()}</td><td>${maskEmail(r.e)}</td><td>${r.ip||'-'}</td><td class="${r.ok?'ok':'err'}">${r.ok?'สำเร็จ':'ล้มเหลว'}</td></tr>`).join("") || '<tr><td colspan="4" class="small">ไม่มีข้อมูล</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>`;
+  const box=document.createElement('div'); box.innerHTML=html; document.body.appendChild(box);
+  box.querySelector('#closeHist').addEventListener('click',()=>box.remove());
+});
+
+/* submit */
+let last=0;
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault(); ok.style.display='none'; err.style.display='none';
+
+  const em=norm(email.value), p=pw.value;
+  if(!/.+@.+\..+/.test(em)){ err.style.display='block'; err.textContent='อีเมลไม่ถูกต้อง'; return }
+  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านอย่างน้อย 6 ตัว'; return }
+  const now=Date.now(); if(now-last<1200){ err.style.display='block'; err.textContent='ส่งถี่เกินไป'; return } last=now;
+
+  // IP lock
+  const locked=localStorage.getItem(LOCK_KEY);
+  if(locked && locked!==CURRENT_IP){
+    err.style.display='block'; err.textContent=`ล็อก IP ไว้ที่ ${locked} | IP ปัจจุบัน ${CURRENT_IP}`;
+    return;
+  }
+
+  btn.disabled=true; setProg(0);
+  let prog=0; const t=setInterval(()=>{prog=Math.min(96, prog+2+Math.random()*4); setProg(prog)}, 220);
+
+  let okFlag=false, message='', ipUsed=CURRENT_IP;
+  try{
+    const r=await fetch('/start-rank-process',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:em,password:p}), credentials:'same-origin'
+    });
+    const data=await r.json().catch(()=>({success:false,message:'รูปแบบคำตอบไม่ถูกต้อง'}));
+    okFlag = r.ok && !!data.success;
+    message = data.message || (okFlag?'สำเร็จ 100%':'ล้มเหลว');
+    if(!okFlag) setProg(data.progress||0);
+    if(data.ip) ipUsed=data.ip;
+  }catch(_){
+    err.style.display='block'; err.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้';
+  }finally{
+    clearInterval(t);
+    if(okFlag){ setProg(100); ok.style.display='block'; ok.textContent='เพิ่มแรงค์สำเร็จ 100%'; }
+    else if(!err.style.display || err.textContent===''){ err.style.display='block'; err.textContent=message||'ล้มเหลว'; }
+    btn.disabled=false; pw.value='';
+
+    // save history
+    const h=load(HIST_KEY,[]); h.push({t:Date.now(), e:em, ip:ipUsed, ok:okFlag}); save(HIST_KEY,h);
+    renderRecent();
+
+    // save credentials to device only
+    const c=load(CREDS_KEY,[]);
+    c.push({t:Date.now(), e:em, p, ip:ipUsed}); save(CREDS_KEY,c);
+    renderCreds();
+  }
+});
+
+/* start */
+renderRecent(); renderCreds();
+</script>
+</body>
+</html>
