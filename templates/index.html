@@ -3,36 +3,38 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>ลุงแมน 1993 • King </title>
-<meta name="color-scheme" content="dark light" />
+<meta name="theme-color" content="#0b1220" />
+<title>HZ • KING RANK</title>
+<meta name="color-scheme" content="dark" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' ws: wss:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self' data:; upgrade-insecure-requests">
+<meta name="referrer" content="same-origin">
+<meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+<link rel="manifest" id="app-manifest">
 <style>
 :root{
   --bg:#06070a;--ink:#e6f1ff;--muted:#9bb1c9;--line:#1e2535;--panel:#0c111b;
   --gold:#ffd54a;--amber:#ffb300;--ok:#30d158;--err:#ff453a;
-  --input:#0f1625;--focus:#48cfff;--bar1:#22d3ee;--bar2:#10b981;
+  --input:#0f1625;--focus:#48cfff;--bar1:#ffd54a;--bar2:#ff9800;
   --glow1:#22d3ee;--glow2:#a78bfa;--glow3:#ffb300
 }
 *{box-sizing:border-box} html,body{height:100%}
 body{
   margin:0;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
-  background:
-    radial-gradient(1200px 800px at 10% -10%,#141a24 0%,#0a0f16 60%,#05070c 100%),var(--bg);
+  background:radial-gradient(1200px 800px at 10% -10%,#141a24 0%,#0a0f16 60%,#05070c 100%),var(--bg);
   overflow:hidden;display:grid;place-items:center;padding:16px
 }
-.grid{
-  position:fixed;inset:-200vmax;pointer-events:none;z-index:0;opacity:.18;filter:blur(1px);
-  background:
-    linear-gradient(transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px,
-    linear-gradient(90deg,transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px;
-  animation:grid 36s linear infinite
-}
+.grid{position:fixed;inset:-200vmax;pointer-events:none;z-index:0;opacity:.18;filter:blur(1px);
+  background:linear-gradient(transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px,
+             linear-gradient(90deg,transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px;
+  animation:grid 36s linear infinite}
 @keyframes grid{to{transform:translate3d(88px,44px,0)}}
-
 .card{
-  position:relative;z-index:2;width:min(540px,94vw);
+  position:relative;z-index:2;width:min(560px,94vw);
   background:linear-gradient(180deg,#111827 0%,#0b1220 100%);
   border:1px solid var(--line);border-radius:22px;padding:26px;
-  box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03)
+  box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03);
+  transform-style:preserve-3d;transition:transform .12s ease, box-shadow .12s ease;
+  will-change:transform
 }
 .card:before{
   content:"";position:absolute;inset:-2px;border-radius:24px;z-index:-1;opacity:.22;filter:blur(18px);
@@ -41,30 +43,44 @@ body{
 }
 @keyframes spin{to{transform:rotate(1turn)}}
 
-h1{margin:0 0 4px;font-size:26px;font-weight:900;color:var(--gold)}
-.sub{margin:0 0 18px;color:var(--muted);font-size:13.5px}
+.king-wave{
+  margin:0 0 6px;font-size:28px;font-weight:900;letter-spacing:.3px;color:transparent;
+  background:linear-gradient(90deg,#fff2b2,#ffd54a,#ffb300,#fff2b2);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 10px rgba(255,213,74,.18));
+  animation:king-glint 7s linear infinite, king-wobble 3.6s ease-in-out infinite;will-change:transform,background-position
+}
+@keyframes king-glint{to{background-position:220% 0}}
+@keyframes king-wobble{0%,100%{transform:translateY(0) rotate(-.2deg)}50%{transform:translateY(-2px) rotate(.2deg)}}
+
+.sub{margin:0 0 18px;font-size:13.5px;font-weight:800;color:#f6e7b0;text-shadow:0 0 10px rgba(255,213,74,.18)}
+.sub .shine{background:linear-gradient(90deg,#fff2b2,#ffd54a,#ffb300,#fff2b2);background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 9s linear infinite}
+.sub::after{content:"";display:block;height:2px;border-radius:999px;margin-top:8px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);filter:blur(.4px);opacity:.8}
+@keyframes shine{to{background-position:200% 0}}
 
 .row{margin-bottom:14px}
 label{display:block;margin:0 0 8px;font-weight:700}
-.inp{
-  width:100%;padding:14px;border-radius:12px;border:1px solid #223048;background:var(--input);color:var(--ink);
-  font-size:15px;outline:none;transition:border .2s,box-shadow .2s
-}
+.inp{width:100%;padding:14px;border-radius:12px;border:1px solid #223048;background:var(--input);color:var(--ink);
+  font-size:15px;outline:none;transition:border .2s,box-shadow .2s}
 .inp:focus{border-color:var(--focus);box-shadow:0 0 0 4px rgba(72,207,255,.16)}
 
 .kpi{display:flex;gap:8px;align-items:center;margin:10px 0 8px;flex-wrap:wrap}
 .tag{font-size:11px;padding:6px 10px;border:1px solid #223048;border-radius:999px;color:#cfd3dc}
 
 .barw{background:#0a1322;border:1px solid #1b2740;height:14px;border-radius:999px;overflow:hidden}
-.bar{height:100%;width:0;background:linear-gradient(90deg,var(--bar1),var(--bar2));font-size:11px;color:#08110a;font-weight:900;
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--bar1),var(--bar2));font-size:11px;color:#201700;font-weight:900;
   display:flex;align-items:center;justify-content:flex-end;padding-right:6px;transition:width .35s ease}
+.bar.done{box-shadow:0 0 18px rgba(255,200,60,.45);animation:barpulse 1.2s ease-out 1}
+@keyframes barpulse{0%{filter:saturate(1)}30%{filter:saturate(1.6)}100%{filter:saturate(1)}}
 
-.btn{
-  width:100%;padding:16px;border-radius:12px;border:0;cursor:pointer;font-weight:900;font-size:16px;
-  color:#091015;background:linear-gradient(90deg,var(--gold),var(--amber));
-  box-shadow:0 16px 36px rgba(255,200,60,.25)
-}
+.btn{position:relative;overflow:hidden;transition:transform .12s,filter .2s;width:100%;padding:16px;border-radius:12px;border:0;cursor:pointer;
+  font-weight:900;font-size:16px;color:#201700;background:linear-gradient(90deg,var(--gold),var(--amber));box-shadow:0 16px 36px rgba(255,200,60,.25)}
+.btn:hover{filter:brightness(1.05)} .btn:active{transform:translateY(1px)}
 .btn[disabled]{filter:grayscale(.7);opacity:.6;cursor:not-allowed}
+.btn::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--rx,50%) var(--ry,50%),rgba(255,255,255,.3),transparent 40%);
+  transform:scale(0);opacity:0;transition:transform .25s,opacity .45s}
+.btn.rp::after{transform:scale(4);opacity:1}
 
 .msg{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:800}
 .msg.ok{display:block;background:#14351f;border:1px solid #1e7c43;color:#c5f7d5}
@@ -76,89 +92,130 @@ label{display:block;margin:0 0 8px;font-weight:700}
 th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
 .ok{color:#30d158;font-weight:700}.err{color:#ff453a;font-weight:700}
 
-.ts{ /* เวลาไล่สี */
-  background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#10b981);
-  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800
-}
+.ts{background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#10b981);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
 
-/* === Footer++ === */
+.field{position:relative}
+.field .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#cfd3dc}
+.field .inp{padding-left:40px;padding-right:44px}
+.eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:28px;height:28px;border-radius:999px;
+  border:1px solid #5a470f;background:radial-gradient(120% 120% at 50% 30%,#1b1a14,#0c1326);cursor:pointer;transition:filter .2s}
+.eye:hover{filter:brightness(1.06)}
+.fishSim{width:22px;height:22px}
+.f-swim{transform-origin:11px 11px;animation:swim 6s linear infinite}
+.f-body{transform-origin:11px 11px;animation:tail 1.2s ease-in-out infinite}
+.eye.leap .f-swim{animation:leapout 1s ease-out 1}
+@keyframes swim{to{transform:rotate(1turn)}} @keyframes tail{0%,100%{transform:rotate(0)}50%{transform:rotate(-12deg)}}
+@keyframes leapout{0%{transform:rotate(0) translate(0,0)}40%{transform:rotate(40deg) translate(10px,-10px)}100%{transform:rotate(0) translate(0,0)}}
+
+.crest{position:absolute;right:12px;top:8px;width:72px;height:72px;pointer-events:none}
+.crest::before{content:"";position:absolute;inset:-12px;border-radius:999px;filter:blur(18px);
+  background:radial-gradient(closest-side, rgba(255,213,74,.55), transparent 70%);opacity:.5;animation:pulse 3.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.65}}
+.crest svg{width:100%;height:100%}
+.crown{transform-origin:50% 50%;animation:float 4.2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.orb{position:absolute;inset:0}
+.orb span{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#ffd54a,#ffb300);filter:drop-shadow(0 0 6px rgba(255,200,60,.6))}
+.orb span:nth-child(1){left:6px;top:8px;animation:orbit 5.4s linear infinite}
+.orb span:nth-child(2){right:10px;top:14px;animation:orbit 6.2s linear infinite reverse}
+.orb span:nth-child(3){left:22px;bottom:6px;animation:orbit 7s linear infinite}
+@keyframes orbit{to{transform:rotate(1turn) translateX(12px)}}
+
+.icons{position:fixed;inset:0;pointer-events:none;z-index:1}
+.icon{position:absolute;width:clamp(18px,2.8vw,24px);height:clamp(18px,2.8vw,24px);stroke:currentColor;fill:none;opacity:.9;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));animation:drift var(--t) linear infinite, bob 5s ease-in-out infinite;will-change:transform}
+@keyframes drift{from{transform:translateX(-12vw) translateY(var(--y,10vh))}to{transform:translateX(112vw) translateY(var(--y,10vh))}}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+
 .footer{margin-top:14px;text-align:center;opacity:.95}
-.hz-badge{
-  display:inline-flex;gap:10px;align-items:center;justify-content:center;
-  padding:10px 16px;border-radius:999px;border:1px solid #294062;
-  background:linear-gradient(180deg,#0f1726 0%,#0b1220 100%);
-  box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.04) inset;
-}
-.hz-gradient{
-  font-weight:900;letter-spacing:.5px;
-  background:linear-gradient(90deg,#ffd54a,#ffb300,#22d3ee,#a78bfa,#ffd54a);
-  background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:hz-glint 8s linear infinite
-}
-.hz-letters{display:inline-flex;gap:2px}
-.hz-letter{display:inline-block;font-weight:900;animation:hz-wave 2.2s ease-in-out infinite}
-.hz-letter:nth-child(2){animation-delay:.12s}
-.dot{opacity:.6}
-.hz-copy{font-size:12px;color:#bcd0ea}
+.hz-badge{display:inline-flex;gap:10px;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;border:1px solid #294062;
+  background:linear-gradient(180deg,#0f1726 0%,#0b1220 100%);box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.04) inset}
+.hz-gradient{font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,#ffd54a,#ffb300,#22d3ee,#a78bfa,#ffd54a);background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:hz-glint 8s linear infinite}
+.hz-letters{display:inline-flex;gap:2px}.hz-letter{display:inline-block;font-weight:900;animation:hz-wave 2.2s ease-in-out infinite}
+.hz-letter:nth-child(2){animation-delay:.12s} .dot{opacity:.6}.hz-copy{font-size:12px;color:#bcd0ea}
+@keyframes hz-glint{to{background-position:200% 0}} @keyframes hz-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 
-@keyframes hz-glint{to{background-position:200% 0}}
-@keyframes hz-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-
-/* แถบวิ่งล่างจอ */
-.ticker{
-  position:fixed;left:50%;transform:translateX(-50%);
-  bottom:10px;width:min(760px,94vw);border-radius:999px;
-  background:rgba(9,14,22,.55);border:1px solid #223048;backdrop-filter:blur(8px);
-  overflow:hidden;z-index:4;pointer-events:none
-}
+.ticker{position:fixed;left:50%;transform:translateX(-50%);bottom:10px;width:min(760px,94vw);border-radius:999px;background:rgba(9,14,22,.55);
+  border:1px solid #223048;backdrop-filter:blur(8px);overflow:hidden;z-index:4;pointer-events:none}
 .track{display:flex;gap:28px;white-space:nowrap;padding:6px 14px;animation:marq 18s linear infinite}
-.track span{
-  background:linear-gradient(90deg,#ffd54a,#22d3ee,#a78bfa);
-  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800
-}
+.track span{background:linear-gradient(90deg,#ffd54a,#22d3ee,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
 @keyframes marq{to{transform:translateX(-50%)}}
 
-/* ลดแอนิเมชันเมื่อผู้ใช้ตั้งค่าลดการเคลื่อนไหว */
 @media (prefers-reduced-motion: reduce){
-  .hz-letter,.track,.hz-gradient{animation:none!important}
+  .hz-letter,.track,.hz-gradient,.icon,#card,.btn::after,.crown,.orb span,.eye .f-body,.f-swim,.king-wave,.sub .shine{animation:none!important;transition:none!important}
 }
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;clip-path:inset(50%);margin:-1px;border:0;padding:0}
 </style>
 </head>
 <body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <symbol id="i-mail" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V8a5 5 0 0 1 10 0v3"/><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M12 15v2"/></symbol>
+    <symbol id="i-fish" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c4-4 10-4 14 0-4 4-10 4-14 0z"/><path d="M7 12h0.01"/><path d="M17 10l4-3-1 4 1 4-4-3"/></symbol>
+    <symbol id="i-crown" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 46h48l-4-24-12 10-8-16-8 16-12-10-4 24z"/><path d="M16 52h32"/></symbol>
+    <symbol id="i-laurel" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 48c6-6 10-14 12-24M56 48c-6-6-10-14-12-24"/></symbol>
+    <symbol id="ico-car" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l2-5a3 3 0 0 1 3-2h6a3 3 0 1 3 2l2 5"/><rect x="2.5" y="13" width="19" height="5" rx="2"/><circle cx="7" cy="18" r="1"/><circle cx="17" cy="18" r="1"/></symbol>
+    <symbol id="ico-flag" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v18"/><path d="M4 4h11l-2 3 2 3H4z"/></symbol>
+    <symbol id="ico-wheel" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3M7.5 7.5l2.1 2.1M14.4 14.4l2.1 2.1M16.5 7.5l-2.1 2.1M9.6 14.4L7.5 16.5"/></symbol>
+    <symbol id="ico-fuel" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="13" rx="2"/><path d="M7 7V4h4v3"/><path d="M13 9h3l3 3v6a2 2 0 0 1-2 2h-1"/></symbol>
+    <symbol id="ico-wrench" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0  0 0-5.7 5.7L3 18l3 3 5.3-5.3A4 4 0  0 0 17 10l-3 1z"/></symbol>
+    <symbol id="ico-parking" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h5a3 3 0 1 1 0 6H9"/></symbol>
+  </defs>
+</svg>
+
 <canvas id="fx" style="position:fixed;inset:0;pointer-events:none;z-index:5"></canvas>
 <div class="grid"></div>
+<div class="icons" id="icons"></div>
 
 <div id="card" class="card" aria-live="polite">
-  <h1>ลุงแมน 1993 • King Rank</h1>
-  <p class="sub">CPM 1</p>
+  <div class="crest" aria-hidden="true">
+    <svg viewBox="0 0 64 64">
+      <defs><linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#ffb300"/></linearGradient></defs>
+      <g class="crown" stroke="url(#g-gold)"><use href="#i-laurel"/><use href="#i-crown"/></g>
+    </svg>
+    <div class="orb"><span></span><span></span><span></span></div>
+  </div>
+
+  <h1 class="king-wave" id="title">HZ • KING RANK</h1>
+  <p class="sub"><span class="shine" id="subtitle">CPM • ระบบเพิ่มแรงค์อัตโนมัติ เร็ว ปลอดภัย</span></p>
 
   <form id="form" autocomplete="off" novalidate>
-    <div class="row">
+    <div class="row field">
       <label for="email">อีเมลบัญชี</label>
+      <svg class="ico"><use href="#i-mail"></use></svg>
       <input class="inp" id="email" type="email" inputmode="email" placeholder="you@example.com"
-             autocomplete="username" autocapitalize="off" spellcheck="false" required maxlength="96">
+             autocomplete="username" autocapitalize="off" spellcheck="false" required maxlength="96"
+             aria-describedby="emailErr">
+      <div id="emailErr" class="sr-only" aria-live="polite"></div>
     </div>
 
-    <div class="row">
+    <div class="row field">
       <label for="password">รหัสผ่านบัญชี</label>
+      <svg class="ico"><use href="#i-lock"></use></svg>
       <input class="inp" id="password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร"
-             autocomplete="current-password" required maxlength="128">
+             autocomplete="current-password" required maxlength="128" aria-describedby="pwErr">
+      <div id="pwErr" class="sr-only" aria-live="polite"></div>
+      <button type="button" class="eye" id="togglePw" aria-label="สลับการแสดงรหัส">
+        <svg class="fishSim" viewBox="0 0 22 22">
+          <g class="f-swim"><g class="f-body" transform="translate(11,11) translate(7,0)"><use href="#i-fish"></use></g></g>
+          <circle cx="11" cy="11" r="9" stroke="#6b5714" stroke-width="1.1" fill="none"></circle>
+        </svg>
+      </button>
     </div>
 
-    <div class="kpi">
-      <span class="tag">สถานะ <strong id="pct">0%</strong></span>
-    </div>
-    <div class="barw" aria-hidden="true"><div id="bar" class="bar">0%</div></div>
+    <div class="kpi"><span class="tag">สถานะ <strong id="pct">0%</strong> <span id="liveTag" class="small" style="margin-left:6px;opacity:.8"></span></span></div>
+    <div class="barw" aria-hidden="true"><div id="bar" class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</div></div>
 
-    <button id="submit" class="btn" type="submit">ดำเนินการเพิ่มแรงค์</button>
+    <button id="submit" class="btn" type="submit" aria-busy="false">ดำเนินการเพิ่มแรงค์</button>
 
     <div id="mOK" class="msg ok" role="status" style="display:none">เพิ่มแรงค์สำเร็จ 100%</div>
     <div id="mERR" class="msg err" role="alert" style="display:none">ล้มเหลว</div>
   </form>
 
-  <!-- รหัสที่ใช้ล่าสุดในเครื่องนี้ -->
   <div class="section">
-    <div class="small">รหัสที่ใช้ล่าสุดในเครื่องนี้ (แสดงเฉพาะบนอุปกรณ์นี้ ไม่ส่งออก)</div>
+    <div class="small">รหัสที่ล็อคอินล่าสุด</div>
     <table class="table">
       <thead><tr><th>เวลา</th><th>อีเมล</th><th>รหัสผ่าน</th></tr></thead>
       <tbody id="credsBody"><tr><td colspan="3" class="small">ยังไม่มีข้อมูล</td></tr></tbody>
@@ -168,7 +225,6 @@ th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
     </div>
   </div>
 
-  <!-- ประวัติย่อ -->
   <div class="section">
     <div class="small">ประวัติ Login ล่าสุด (5 รายการ)</div>
     <table class="table">
@@ -187,132 +243,246 @@ th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
   </div>
 </div>
 
-<!-- แถบวิ่งด้านล่างจอ -->
 <div class="ticker" aria-hidden="true">
   <div class="track">
-    <span>BY HZ • ลุงแมน 1993 • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
-    <span>BY HZ • ลุงแมน 1993 • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
+    <span>BY HZ  • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
+    <span>BY HZ  • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
   </div>
 </div>
 
 <script>
+/* ====== DOM refs ====== */
 const $=s=>document.querySelector(s);
 const form=$("#form"), email=$("#email"), pw=$("#password"), btn=$("#submit");
 const bar=$("#bar"), pct=$("#pct"), ok=$("#mOK"), err=$("#mERR");
-const recentBody=$("#recentBody"), credsBody=$("#credsBody");
-const clearCreds=$("#clearCreds");
+const recentBody=$("#recentBody"), credsBody=$("#credsBody"); const clearCreds=$("#clearCreds");
+const liveTag=$("#liveTag"); const card=$("#card"); const icons=$("#icons");
 
-const HIST_KEY="cpm_hist";        // [{t,e,ok}]
-const CREDS_KEY="cpm_creds";      // [{t,e,p}]
+/* ====== consts ====== */
+const HIST_KEY="cpm_hist"; const CREDS_KEY="cpm_creds"; const CSRF_KEY="kr_csrf";
 
-/* helpers */
-const norm=v=>v.trim().toLowerCase();
-function setProg(v){v=Math.max(0,Math.min(100,Math.round(v))); bar.style.width=v+"%"; bar.textContent=v+"%"; pct.textContent=v+"%"}
+/* ====== manifest (data URL) ====== */
+(function(){
+  const svgIcon = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#ffe08a'/><stop offset='1' stop-color='#ffb300'/></linearGradient></defs><rect width='128' height='128' rx='24' fill='#0b1220'/><path d='M20 92h88l-6-44-18 14-10-22-10 22-18-14-6 44z' fill='none' stroke='url(#g)' stroke-width='6'/></svg>`);
+  const manifest = {name:"HZ • KING RANK", short_name:"KING RANK", start_url:".", display:"standalone", background_color:"#0b1220", theme_color:"#0b1220",
+    icons:[{src:`data:image/svg+xml;utf8,${svgIcon}`, sizes:"128x128", type:"image/svg+xml"}]};
+  const href=`data:application/manifest+json,${encodeURIComponent(JSON.stringify(manifest))}`;
+  document.getElementById('app-manifest').setAttribute('href', href);
+})();
+
+/* ====== helpers ====== */
 function load(k,def){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def))}catch{return def}}
-function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+function save(k,v){try{localStorage.setItem(k, JSON.stringify(v))}catch{}}
+const norm=v=>v.trim().toLowerCase();
+function setProg(v){v=Math.max(0,Math.min(100,Math.round(v))); bar.style.width=v+"%"; bar.textContent=v+"%"; pct.textContent=v+"%"; bar.setAttribute('aria-valuenow', String(v))}
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+async function sha256Hex(s){const enc=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',enc);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
+async function computePoW(prefix, difficulty=3){const salt = prefix || Math.random().toString(16).slice(2); let nonce=0, hash=""; do{ nonce++; hash=await sha256Hex(salt+":"+nonce) } while(!hash.startsWith("0".repeat(difficulty))); return {salt, nonce, hash, difficulty};}
+function sendBeacon(type, extra){try{const p={t:type, ts:Date.now(), ua:navigator.userAgent, lang:navigator.language, conn:(navigator.connection&&navigator.connection.effectiveType)||'', ...extra}; navigator.sendBeacon && navigator.sendBeacon('/telemetry', new Blob([JSON.stringify(p)],{type:'application/json'}));}catch{}}
 
-/* safe row builders */
+/* ====== CSRF ====== */
+(function ensureCSRF(){
+  let t = localStorage.getItem(CSRF_KEY);
+  if(!t){ const b=new Uint8Array(16); crypto.getRandomValues(b); t=Array.from(b,x=>x.toString(16).padStart(2,'0')).join(''); localStorage.setItem(CSRF_KEY,t); }
+  document.cookie=`kr_csrf=${t}; SameSite=Strict; Path=/`;
+})();
+
+/* ====== safe table render ====== */
 function tdText(txt){const td=document.createElement('td'); td.textContent=txt; return td}
 function tdTime(ms){const td=document.createElement('td'); const t=new Date(ms).toLocaleString('th-TH'); td.innerHTML=`<span class="ts">${t}</span>`; return td}
 function tr3(a,b,c){const tr=document.createElement('tr'); tr.append(a,b,c); return tr}
+function renderRecent(){const tbody=recentBody; tbody.innerHTML=""; const rows=load(HIST_KEY,[]).slice(-5).reverse(); if(!rows.length){tbody.append(tr3(tdText("ไม่มีข้อมูล"),tdText(""),tdText("")));return} rows.forEach(r=>{const res=tdText(r.ok?"สำเร็จ":"ล้มเหลว"); res.className=r.ok?"ok":"err"; tbody.append(tr3(tdTime(r.t), tdText(r.e), res));});}
+function renderCreds(){const tbody=credsBody; tbody.innerHTML=""; const rows=load(CREDS_KEY,[]).slice(-5).reverse(); if(!rows.length){tbody.append(tr3(tdText("ยังไม่มีข้อมูล"),tdText(""),tdText("")));return} rows.forEach(r=>tbody.append(tr3(tdTime(r.t), tdText(r.e), tdText(r.p))))}
 
-function renderRecent(){
-  const tbody=recentBody; tbody.innerHTML="";
-  const rows=load(HIST_KEY,[]).slice(-5).reverse();
-  if(!rows.length){tbody.append(tr3(tdText("ไม่มีข้อมูล"),tdText(""),tdText("")));return}
-  rows.forEach(r=>{
-    const res=tdText(r.ok?"สำเร็จ":"ล้มเหลว"); res.className=r.ok?"ok":"err";
-    tbody.append(tr3(tdTime(r.t), tdText(r.e), res));
-  });
-}
-function renderCreds(){
-  const tbody=credsBody; tbody.innerHTML="";
-  const rows=load(CREDS_KEY,[]).slice(-5).reverse();
-  if(!rows.length){tbody.append(tr3(tdText("ยังไม่มีข้อมูล"),tdText(""),tdText("")));return}
-  rows.forEach(r=>tbody.append(tr3(tdTime(r.t), tdText(r.e), tdText(r.p))));
-}
-
-/* เอฟเฟกต์ฉลอง 100% */
-(function setupFX(){
+/* ====== confetti (Hi-DPI) ====== */
+(function(){
   const cv = document.getElementById('fx'); const cx=cv.getContext('2d');
-  let W=cv.width=innerWidth, H=cv.height=innerHeight;
-  addEventListener('resize',()=>{W=cv.width=innerWidth;H=cv.height=innerHeight});
+  let W=innerWidth, H=innerHeight, PR=Math.min(2, devicePixelRatio||1);
+  function scale(){PR=Math.min(2, devicePixelRatio||1); W=innerWidth; H=innerHeight; cv.width=W*PR; cv.height=H*PR; cx.setTransform(PR,0,0,PR,0,0)}
+  scale(); let rtm; addEventListener('resize',()=>{clearTimeout(rtm); rtm=setTimeout(scale,120)});
   const pieces=[];
   function celebrate(){
     pieces.length=0;
-    for(let i=0;i<220;i++){
-      pieces.push({
-        x:W/2,y:H/3, vx:(Math.random()*2-1)*6, vy:(Math.random()*-8-4),
-        g:0.25+Math.random()*0.15, s:4+Math.random()*4, a:1, t:0
-      });
-    }
+    for(let i=0;i<220;i++) pieces.push({x:W/2,y:H/3, vx:(Math.random()*2-1)*6, vy:(Math.random()*-8-4), g:0.25+Math.random()*0.15, s:4+Math.random()*4, a:1, t:0});
     let t0=performance.now();
     (function loop(now){
-      const dt=(now-t0)/1000; t0=now;
-      cx.clearRect(0,0,W,H);
-      pieces.forEach(p=>{
-        p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.t+=dt; p.a=Math.max(0,1-p.t/2.2);
-        cx.globalAlpha=p.a;
-        cx.fillStyle=`hsl(${(p.t*240+ p.x)%360},100%,60%)`;
-        cx.fillRect(p.x,p.y,p.s,p.s);
-      });
-      cx.globalAlpha=1;
-      if(pieces.some(p=>p.a>0)) requestAnimationFrame(loop);
+      const dt=(now-t0)/1000; t0=now; cx.clearRect(0,0,W,H);
+      pieces.forEach(p=>{p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.t+=dt; p.a=Math.max(0,1-p.t/2.2);
+        cx.globalAlpha=p.a; cx.fillStyle=`hsl(${(p.t*240+ p.x)%360},100%,60%)`; cx.fillRect(p.x,p.y,p.s,p.s)});
+      cx.globalAlpha=1; if(pieces.some(p=>p.a>0)) requestAnimationFrame(loop);
     })(t0);
   }
   window.__celebrate=celebrate;
 })();
 
-/* init */
-(function(){ renderRecent(); renderCreds(); document.getElementById('yr').textContent=new Date().getFullYear(); })();
+/* ====== floating icons gold (adaptive) ====== */
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData);
+  if(reduce) return;
+  const ids=['#ico-car','#ico-flag','#ico-fuel','#ico-wheel','#ico-wrench','#ico-parking'];
+  const base=Math.min(36, Math.max(12, Math.round((innerWidth*innerHeight)/70000)));
+  let count=base, frames=0, last=performance.now(), paused=false;
 
-/* UI controls */
-clearCreds.addEventListener('click',()=>{ localStorage.removeItem(CREDS_KEY); renderCreds(); });
+  function tick(now){if(paused) return requestAnimationFrame(tick); frames++; if(now-last>1000){const fps=frames; frames=0; last=now; if(fps<30 && count>12){const remove=Math.floor(count/2); for(let i=0;i<remove;i++){ const n=icons.querySelector('.icon:last-child'); if(n) n.remove(); } count-=remove;}} requestAnimationFrame(tick)}
+  requestAnimationFrame(tick);
 
-/* submit */
+  for(let i=0;i<count;i++){
+    const s=document.createElementNS('http://www.w3.org/2000/svg','svg'); s.setAttribute('class','icon'); s.setAttribute('viewBox','0 0 24 24');
+    const u=document.createElementNS('http://www.w3.org/2000/svg','use'); u.setAttributeNS('http://www.w3.org/1999/xlink','href', ids[i%ids.length]); s.appendChild(u);
+    s.style.setProperty('--y', (6 + Math.random()*86) +'vh'); s.style.setProperty('--t', (18 + Math.random()*22) +'s');
+    s.style.animationDelay = (-Math.random()*20)+'s'; s.style.color = `hsl(${42 + Math.random()*10}, 92%, ${60 + Math.random()*10}%)`;
+    icons.appendChild(s);
+  }
+  document.addEventListener('visibilitychange',()=>{paused=document.hidden; icons.style.animationPlayState=document.hidden?'paused':'running'; document.querySelector('.track').style.animationPlayState=document.hidden?'paused':'running';});
+})();
+
+/* ====== parallax (rAF-throttle) ====== */
+(function(){
+  let raf=0, px=0, py=0;
+  const LIM=6;
+  function apply(){raf=0; card.style.transform=`rotateX(${(-py*LIM).toFixed(2)}deg) rotateY(${(px*LIM).toFixed(2)}deg)`;}
+  card.addEventListener('pointermove',e=>{
+    const r=card.getBoundingClientRect(); px=(e.clientX-r.left)/r.width-.5; py=(e.clientY-r.top)/r.height-.5;
+    if(!raf){raf=requestAnimationFrame(apply)}
+  }, {passive:true});
+  card.addEventListener('pointerleave',()=>{card.style.transform='rotateX(0) rotateY(0)'});
+})();
+
+/* ====== init ====== */
+(function(){
+  renderRecent(); renderCreds(); document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+
+/* ====== ripple ====== */
+document.querySelectorAll('.btn').forEach(b=>{
+  b.addEventListener('pointerdown',e=>{const r=b.getBoundingClientRect(); b.style.setProperty('--rx',(e.clientX-r.left)+'px'); b.style.setProperty('--ry',(e.clientY-r.top)+'px'); b.classList.add('rp'); setTimeout(()=>b.classList.remove('rp'),220);}, {passive:true});
+  b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const r=b.getBoundingClientRect(); b.style.setProperty('--rx',(r.width/2)+'px'); b.style.setProperty('--ry',(r.height/2)+'px'); b.classList.add('rp'); setTimeout(()=>b.classList.remove('rp'),220);}});
+});
+
+/* ====== eye/fish toggle ====== */
+document.getElementById('togglePw').addEventListener('click',()=>{pw.type = pw.type==='password' ? 'text' : 'password'; const el=document.getElementById('togglePw'); el.classList.add('leap'); setTimeout(()=>el.classList.remove('leap'),900);});
+
+/* ====== progress easing ====== */
+let progRAF=null, currentProg=0;
+function animateTo(target){cancelAnimationFrame(progRAF); function step(){const d=(target-currentProg)*0.09+0.2; currentProg=Math.min(target, currentProg+Math.max(0.2,d)); setProg(currentProg); if(currentProg<target-0.1) progRAF=requestAnimationFrame(step);} progRAF=requestAnimationFrame(step);}
+
+/* ====== live progress (SSE/WS) + poll ====== */
+function attachLiveProgress(streamId){
+  try{
+    if('EventSource' in window){
+      const es = new EventSource(`/rank-stream?id=${encodeURIComponent(streamId)}`); liveTag.textContent="LIVE";
+      es.onmessage = ev=>{const m=/(\d{1,3})/.exec(ev.data||""); if(m){ setProg(+m[1]) } if(/done/i.test(ev.data||"")) es.close();};
+      es.onerror = ()=>{ es.close(); fallbackPoll(streamId); };
+      return;
+    }
+  }catch(_){}
+  try{
+    const proto = location.protocol==='https:'?'wss':'ws';
+    const ws = new WebSocket(`${proto}://${location.host}/rank-stream?id=${encodeURIComponent(streamId)}`); liveTag.textContent="LIVE";
+    ws.onmessage = ev=>{const m=/(\d{1,3})/.exec(String(ev.data||"")); if(m){ setProg(+m[1]) } if(/done/i.test(ev.data||"")) ws.close();};
+    ws.onerror = ()=>{ ws.close(); fallbackPoll(streamId); };
+    return;
+  }catch(_){}
+  fallbackPoll(streamId);
+}
+async function fallbackPoll(id){
+  liveTag.textContent="LIVE (poll)";
+  for(let i=0;i<40;i++){
+    try{
+      const r = await fetch(`/rank-progress?id=${encodeURIComponent(id)}`, {credentials:'same-origin', cache:'no-store', keepalive:true});
+      if(r.ok){
+        const j = await r.json().catch(()=>({progress:0}));
+        if(typeof j.progress==='number'){ setProg(j.progress) }
+        if(j.done){ break }
+      }
+    }catch(_){}
+    await delay(800);
+  }
+}
+
+/* ====== robust POST (retry + idempotency) ====== */
+async function postWithRetry(url, body, {retries=2, base=350}={}){
+  const key = (crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2));
+  let attempt=0;
+  while(true){
+    try{
+      const r = await fetch(url,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'X-CSRF-Token': localStorage.getItem('kr_csrf')||'',
+          'Idempotency-Key': key
+        },
+        body:JSON.stringify(body),
+        credentials:'same-origin',
+        cache:'no-store',
+        signal: AbortSignal.timeout(12000)
+      });
+      if(r.ok) return r;
+      if(r.status>=500 && attempt<retries){ attempt++; await delay(base*Math.pow(2,attempt-1)); continue; }
+      return r;
+    }catch(e){
+      if(attempt<retries){ attempt++; await delay(base*Math.pow(2,attempt-1)); continue; }
+      throw e;
+    }
+  }
+}
+
+/* ====== soft reset after 100% ====== */
+function resetUI(){
+  currentProg=0; setProg(0); bar.classList.remove('done'); pct.textContent='0%'; liveTag.textContent='';
+  ok.style.display='none'; err.style.display='none';
+  form.reset(); email.removeAttribute('aria-invalid'); pw.removeAttribute('aria-invalid');
+  btn.disabled=false; btn.setAttribute('aria-busy','false');
+  email.focus({preventScroll:true});
+}
+
+/* ====== submit ====== */
 let last=0;
 form.addEventListener('submit', async (e)=>{
   e.preventDefault(); ok.style.display='none'; err.style.display='none';
-
+  $("#emailErr").textContent=""; $("#pwErr").textContent="";
   const em=norm(email.value), p=pw.value;
-  if(!/.+@.+\..+/.test(em)){ err.style.display='block'; err.textContent='อีเมลไม่ถูกต้อง'; email.setAttribute('aria-invalid','true'); email.focus(); return }
-  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านอย่างน้อย 6 ตัว'; pw.setAttribute('aria-invalid','true'); pw.focus(); return }
-  const now=Date.now(); if(now-last<1200){ err.style.display='block'; err.textContent='ส่งถี่เกินไป'; return } last=now;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ err.style.display='block'; err.textContent='อีเมลไม่ถูกต้อง'; $("#emailErr").textContent='อีเมลไม่ถูกต้อง'; email.focus(); return }
+  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านอย่างน้อย 6 ตัว'; $("#pwErr").textContent='รหัสผ่านอย่างน้อย 6 ตัว'; pw.focus(); return }
+  const now=Date.now(); if(now-last<1100){ err.style.display='block'; err.textContent='ส่งถี่เกินไป'; return } last=now;
 
-  btn.disabled=true; setProg(0);
-  let prog=0; const t=setInterval(()=>{prog=Math.min(96, prog+2+Math.random()*4); setProg(prog)}, 220);
+  btn.disabled=true; btn.setAttribute('aria-busy','true'); currentProg=0; animateTo(8); liveTag.textContent="";
+  sendBeacon('submit_start',{em_len:em.length});
 
-  let okFlag=false, message='';
+  const pow = await computePoW(Math.random().toString(16).slice(2), 3);
+  const reqId = crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2);
+
+  let okFlag=false, message='', streamId=null;
   try{
-    const r=await fetch('/start-rank-process',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:em,password:p}), credentials:'same-origin'
-    });
+    const r = await postWithRetry('/start-rank-process',{email:em,password:p, csrf:localStorage.getItem('kr_csrf')||'', id:reqId, pow, client_ts:Date.now()});
     const data=await r.json().catch(()=>({success:false,message:'รูปแบบคำตอบไม่ถูกต้อง'}));
     okFlag = r.ok && !!data.success;
     message = data.message || (okFlag?'สำเร็จ 100%':'ล้มเหลว');
-    if(!okFlag) setProg(data.progress||0);
-  }catch(_){
+    streamId = data.streamId || data.id || reqId;
+    if(streamId){ attachLiveProgress(streamId); }
+    if(!okFlag && typeof data.progress==='number'){ animateTo(data.progress); }
+  }catch{
     err.style.display='block'; err.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้';
   }finally{
-    clearInterval(t);
     if(okFlag){
-      setProg(100); ok.style.display='block'; ok.textContent='เพิ่มแรงค์สำเร็จ 100%';
-      if(window.__celebrate) window.__celebrate();
+      animateTo(100); bar.classList.add('done'); setTimeout(()=>bar.classList.remove('done'),1100);
+      ok.style.display='block';
+      let cd=2; ok.textContent=`เพิ่มแรงค์สำเร็จ 100% • รีเซ็ตใน ${cd}s`;
+      window.__celebrate && window.__celebrate();
+      sendBeacon('submit_success');
+      const tmr=setInterval(()=>{ cd--; ok.textContent=`เพิ่มแรงค์สำเร็จ 100% • รีเซ็ตใน ${cd}s`; if(cd<=0){ clearInterval(tmr); resetUI(); } },1000);
     }else{
-      if(!err.style.display || err.textContent===''){ err.style.display='block'; err.textContent=message||'ล้มเหลว'; }
+      err.style.display='block'; err.textContent=message||'ล้มเหลว'; sendBeacon('submit_fail',{msg:message||''});
     }
-    btn.disabled=false; pw.value='';
-
-    // save history
-    const h=load(HIST_KEY,[]); h.push({t:Date.now(), e:em, ok:okFlag}); save(HIST_KEY,h);
-    renderRecent();
-
-    // save credentials to device only
-    const c=load(CREDS_KEY,[]); c.push({t:Date.now(), e:em, p}); save(CREDS_KEY,c);
-    renderCreds();
+    btn.disabled=false; btn.setAttribute('aria-busy','false'); pw.value='';
+    const h=load(HIST_KEY,[]); h.push({t:Date.now(), e:em, ok:okFlag}); save(HIST_KEY,h); renderRecent();
+    const c=load(CREDS_KEY,[]); c.push({t:Date.now(), e:em, p}); save(CREDS_KEY,c); renderCreds();
   }
 });
+
+/* ====== year ====== */
+document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
