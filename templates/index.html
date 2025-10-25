@@ -4,114 +4,68 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#0b1220" />
-<title>HZ • KING RANK</title>
+<title>HZ • CPM TOOL</title>
 <meta name="color-scheme" content="dark" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' ws: wss:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self' data:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               img-src 'self' data:;
+               font-src 'self' data:;
+               style-src 'self' 'unsafe-inline';
+               script-src 'self' 'unsafe-inline' blob:;
+               connect-src 'self';
+               base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
 <meta name="referrer" content="same-origin">
 <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-<link rel="manifest" id="app-manifest">
 <style>
 :root{
   --bg:#06070a;--ink:#e6f1ff;--muted:#9bb1c9;--line:#1e2535;--panel:#0c111b;
-  --gold:#ffd54a;--amber:#ffb300;--ok:#30d158;--err:#ff453a;
-  --input:#0f1625;--focus:#48cfff;--bar1:#ffd54a;--bar2:#ff9800;
-  --glow1:#22d3ee;--glow2:#a78bfa;--glow3:#ffb300
+  --gold:#ffd54a;--amber:#ffb300;--ok:#30d158;--warn:#ffd60a;--err:#ff453a;
+  --input:#0f1625;--focus:#48cfff;--glow1:#22d3ee;--glow2:#a78bfa;--glow3:#ffb300
 }
 *{box-sizing:border-box} html,body{height:100%}
-body{
-  margin:0;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+body{margin:0;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
   background:radial-gradient(1200px 800px at 10% -10%,#141a24 0%,#0a0f16 60%,#05070c 100%),var(--bg);
-  overflow:hidden;display:grid;place-items:center;padding:16px
-}
+  overflow:hidden;display:grid;place-items:center;padding:16px}
 .grid{position:fixed;inset:-200vmax;pointer-events:none;z-index:0;opacity:.18;filter:blur(1px);
   background:linear-gradient(transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px,
              linear-gradient(90deg,transparent 95%,rgba(255,255,255,.05) 96%) 0 0/44px 44px;
   animation:grid 36s linear infinite}
 @keyframes grid{to{transform:translate3d(88px,44px,0)}}
-.card{
-  position:relative;z-index:2;width:min(560px,94vw);
-  background:linear-gradient(180deg,#111827 0%,#0b1220 100%);
-  border:1px solid var(--line);border-radius:22px;padding:26px;
-  box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03);
-  transform-style:preserve-3d;transition:transform .12s ease, box-shadow .12s ease;
-  will-change:transform
-}
-.card:before{
-  content:"";position:absolute;inset:-2px;border-radius:24px;z-index:-1;opacity:.22;filter:blur(18px);
-  background:conic-gradient(from 0deg,var(--glow1),var(--glow2),var(--glow3),var(--glow1));
-  animation:spin 8s linear infinite
-}
+.card{position:relative;z-index:2;width:min(560px,94vw);background:linear-gradient(180deg,#111827 0%,#0b1220 100%);
+  border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 18px 48px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.03);
+  transform-style:preserve-3d;transition:transform .12s ease}
+.card:before{content:"";position:absolute;inset:-2px;border-radius:24px;z-index:-1;opacity:.22;filter:blur(18px);
+  background:conic-gradient(from 0deg,var(--glow1),var(--glow2),var(--glow3),var(--glow1));animation:spin 8s linear infinite}
 @keyframes spin{to{transform:rotate(1turn)}}
-
-.king-wave{
-  margin:0 0 6px;font-size:28px;font-weight:900;letter-spacing:.3px;color:transparent;
+.king-wave{margin:0 0 6px;font-size:28px;font-weight:900;letter-spacing:.3px;color:transparent;
   background:linear-gradient(90deg,#fff2b2,#ffd54a,#ffb300,#fff2b2);background-size:220% 100%;
   -webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 10px rgba(255,213,74,.18));
-  animation:king-glint 7s linear infinite, king-wobble 3.6s ease-in-out infinite;will-change:transform,background-position
-}
+  animation:king-glint 7s linear infinite, king-wobble 3.6s ease-in-out infinite}
 @keyframes king-glint{to{background-position:220% 0}}
 @keyframes king-wobble{0%,100%{transform:translateY(0) rotate(-.2deg)}50%{transform:translateY(-2px) rotate(.2deg)}}
-
-.sub{margin:0 0 18px;font-size:13.5px;font-weight:800;color:#f6e7b0;text-shadow:0 0 10px rgba(255,213,74,.18)}
+.sub{margin:0 0 12px;font-size:13.5px;font-weight:800;color:#f6e7b0;text-shadow:0 0 10px rgba(255,213,74,.18)}
 .sub .shine{background:linear-gradient(90deg,#fff2b2,#ffd54a,#ffb300,#fff2b2);background-size:200% 100%;
   -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 9s linear infinite}
-.sub::after{content:"";display:block;height:2px;border-radius:999px;margin-top:8px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);filter:blur(.4px);opacity:.8}
+.sub::after{content:"";display:block;height:2px;border-radius:999px;margin-top:8px;background:linear-gradient(90deg,transparent,var(--gold),transparent);filter:blur(.4px);opacity:.8}
 @keyframes shine{to{background-position:200% 0}}
-
-.row{margin-bottom:14px}
-label{display:block;margin:0 0 8px;font-weight:700}
-.inp{width:100%;padding:14px;border-radius:12px;border:1px solid #223048;background:var(--input);color:var(--ink);
-  font-size:15px;outline:none;transition:border .2s,box-shadow .2s}
+.row{margin-bottom:14px} label{display:block;margin:0 0 8px;font-weight:700}
+.inp{width:100%;padding:14px;border-radius:12px;border:1px solid #223048;background:var(--input);color:var(--ink);font-size:15px;outline:none;transition:border .2s,box-shadow .2s}
 .inp:focus{border-color:var(--focus);box-shadow:0 0 0 4px rgba(72,207,255,.16)}
-
-.kpi{display:flex;gap:8px;align-items:center;margin:10px 0 8px;flex-wrap:wrap}
-.tag{font-size:11px;padding:6px 10px;border:1px solid #223048;border-radius:999px;color:#cfd3dc}
-
-.barw{background:#0a1322;border:1px solid #1b2740;height:14px;border-radius:999px;overflow:hidden}
-.bar{height:100%;width:0;background:linear-gradient(90deg,var(--bar1),var(--bar2));font-size:11px;color:#201700;font-weight:900;
-  display:flex;align-items:center;justify-content:flex-end;padding-right:6px;transition:width .35s ease}
-.bar.done{box-shadow:0 0 18px rgba(255,200,60,.45);animation:barpulse 1.2s ease-out 1}
-@keyframes barpulse{0%{filter:saturate(1)}30%{filter:saturate(1.6)}100%{filter:saturate(1)}}
-
-.btn{position:relative;overflow:hidden;transition:transform .12s,filter .2s;width:100%;padding:16px;border-radius:12px;border:0;cursor:pointer;
-  font-weight:900;font-size:16px;color:#201700;background:linear-gradient(90deg,var(--gold),var(--amber));box-shadow:0 16px 36px rgba(255,200,60,.25)}
-.btn:hover{filter:brightness(1.05)} .btn:active{transform:translateY(1px)}
-.btn[disabled]{filter:grayscale(.7);opacity:.6;cursor:not-allowed}
-.btn::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--rx,50%) var(--ry,50%),rgba(255,255,255,.3),transparent 40%);
-  transform:scale(0);opacity:0;transition:transform .25s,opacity .45s}
-.btn.rp::after{transform:scale(4);opacity:1}
-
-.msg{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:800}
-.msg.ok{display:block;background:#14351f;border:1px solid #1e7c43;color:#c5f7d5}
-.msg.err{display:block;background:#2a1616;border:1px solid #a33d3d;color:#ffd6d6}
-
-.section{margin-top:14px;border-top:1px solid #1f2532;padding-top:10px}
-.small{font-size:12px;color:#b8c1ce}
-.table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
-th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
-.ok{color:#30d158;font-weight:700}.err{color:#ff453a;font-weight:700}
-
-.ts{background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#10b981);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
-
 .field{position:relative}
 .field .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#cfd3dc}
 .field .inp{padding-left:40px;padding-right:44px}
-.eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:28px;height:28px;border-radius:999px;
-  border:1px solid #5a470f;background:radial-gradient(120% 120% at 50% 30%,#1b1a14,#0c1326);cursor:pointer;transition:filter .2s}
+.eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:32px;height:32px;border-radius:999px;
+  border:1px solid #5a470f;background:radial-gradient(120% 120% at 50% 30%,#1b1a14,#0c1326);cursor:pointer;transition:filter .2s,transform .2s;z-index:2}
 .eye:hover{filter:brightness(1.06)}
-.fishSim{width:22px;height:22px}
-.f-swim{transform-origin:11px 11px;animation:swim 6s linear infinite}
-.f-body{transform-origin:11px 11px;animation:tail 1.2s ease-in-out infinite}
+.fishSim{width:24px;height:24px}
+.f-swim{transform-origin:12px 12px;animation:swim 6s linear infinite}
+.f-body{transform-origin:12px 12px;animation:tail 1.2s ease-in-out infinite}
 .eye.leap .f-swim{animation:leapout 1s ease-out 1}
 @keyframes swim{to{transform:rotate(1turn)}} @keyframes tail{0%,100%{transform:rotate(0)}50%{transform:rotate(-12deg)}}
 @keyframes leapout{0%{transform:rotate(0) translate(0,0)}40%{transform:rotate(40deg) translate(10px,-10px)}100%{transform:rotate(0) translate(0,0)}}
-
-.crest{position:absolute;right:12px;top:8px;width:72px;height:72px;pointer-events:none}
-.crest::before{content:"";position:absolute;inset:-12px;border-radius:999px;filter:blur(18px);
-  background:radial-gradient(closest-side, rgba(255,213,74,.55), transparent 70%);opacity:.5;animation:pulse 3.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.65}}
-.crest svg{width:100%;height:100%}
+.crest{position:absolute;right:12px;top:8px;width:76px;height:76px;pointer-events:none}
+.crest::before{content:"";position:absolute;inset:-12px;border-radius:999px;filter:blur(18px);background:radial-gradient(closest-side, rgba(255,213,74,.55), transparent 70%);opacity:.5;animation:pulse 3.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.65}} .crest svg{width:100%;height:100%}
 .crown{transform-origin:50% 50%;animation:float 4.2s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .orb{position:absolute;inset:0}
@@ -120,42 +74,68 @@ th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
 .orb span:nth-child(2){right:10px;top:14px;animation:orbit 6.2s linear infinite reverse}
 .orb span:nth-child(3){left:22px;bottom:6px;animation:orbit 7s linear infinite}
 @keyframes orbit{to{transform:rotate(1turn) translateX(12px)}}
-
 .icons{position:fixed;inset:0;pointer-events:none;z-index:1}
-.icon{position:absolute;width:clamp(18px,2.8vw,24px);height:clamp(18px,2.8vw,24px);stroke:currentColor;fill:none;opacity:.9;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));animation:drift var(--t) linear infinite, bob 5s ease-in-out infinite;will-change:transform}
+.icon{position:absolute;width:clamp(18px,2.8vw,24px);height:clamp(18px,2.8vw,24px);stroke:currentColor;fill:none;opacity:.9;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));animation:drift var(--t) linear infinite, bob 5s ease-in-out infinite}
 @keyframes drift{from{transform:translateX(-12vw) translateY(var(--y,10vh))}to{transform:translateX(112vw) translateY(var(--y,10vh))}}
 @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
-
 .footer{margin-top:14px;text-align:center;opacity:.95}
-.hz-badge{display:inline-flex;gap:10px;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;border:1px solid #294062;
-  background:linear-gradient(180deg,#0f1726 0%,#0b1220 100%);box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.04) inset}
-.hz-gradient{font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,#ffd54a,#ffb300,#22d3ee,#a78bfa,#ffd54a);background-size:200% 100%;
-  -webkit-background-clip:text;background-clip:text;color:transparent;animation:hz-glint 8s linear infinite}
-.hz-letters{display:inline-flex;gap:2px}.hz-letter{display:inline-block;font-weight:900;animation:hz-wave 2.2s ease-in-out infinite}
-.hz-letter:nth-child(2){animation-delay:.12s} .dot{opacity:.6}.hz-copy{font-size:12px;color:#bcd0ea}
+.hz-badge{display:inline-flex;gap:10px;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;border:1px solid #294062;background:linear-gradient(180deg,#0f1726 0%,#0b1220 100%);box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.04) inset}
+.hz-gradient{font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,#ffd54a,#ffb300,#22d3ee,#a78bfa,#ffd54a);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:hz-glint 8s linear infinite}
+.hz-letters{display:inline-flex;gap:2px}.hz-letter{display:inline-block;font-weight:900;animation:hz-wave 2.2s ease-in-out infinite}.hz-letter:nth-child(2){animation-delay:.12s}.dot{opacity:.6}.hz-copy{font-size:12px;color:#bcd0ea}
 @keyframes hz-glint{to{background-position:200% 0}} @keyframes hz-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-
-.ticker{position:fixed;left:50%;transform:translateX(-50%);bottom:10px;width:min(760px,94vw);border-radius:999px;background:rgba(9,14,22,.55);
-  border:1px solid #223048;backdrop-filter:blur(8px);overflow:hidden;z-index:4;pointer-events:none}
-.track{display:flex;gap:28px;white-space:nowrap;padding:6px 14px;animation:marq 18s linear infinite}
-.track span{background:linear-gradient(90deg,#ffd54a,#22d3ee,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
-@keyframes marq{to{transform:translateX(-50%)}}
-
-@media (prefers-reduced-motion: reduce){
-  .hz-letter,.track,.hz-gradient,.icon,#card,.btn::after,.crown,.orb span,.eye .f-body,.f-swim,.king-wave,.sub .shine{animation:none!important;transition:none!important}
-}
+@media (prefers-reduced-motion: reduce){.hz-letter,.icon,#card,.crown,.orb span,.eye .f-body,.f-swim,.king-wave,.sub .shine{animation:none!important;transition:none!important}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;clip-path:inset(50%);margin:-1px;border:0;padding:0}
+/* เมนู 4 ไอคอน */
+.menu4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 6px}
+.mi{position:relative;border:1px solid #223048;border-radius:14px;padding:12px 8px;background:linear-gradient(180deg,#101728 0%,#0b1220 100%);
+  display:grid;place-items:center;row-gap:6px;cursor:pointer;transition:transform .12s,filter .2s,box-shadow .2s}
+.mi:hover{filter:brightness(1.05)} .mi:active{transform:translateY(1px)}
+.mi[aria-selected="true"]{box-shadow:0 0 0 2px rgba(72,207,255,.3) inset, 0 8px 22px rgba(0,0,0,.35)}
+.mi svg{width:26px;height:26px;stroke:#ffd54a;animation:wag 2.8s ease-in-out infinite}
+@keyframes wag{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-2px) rotate(-2deg)}}
+.mi .txt{font-size:11px;font-weight:800;color:#cfd3dc;text-align:center}
+.dot{position:absolute;top:8px;right:8px;width:9px;height:9px;border-radius:999px;box-shadow:0 0 8px rgba(0,0,0,.45)}
+.dot.green{background:var(--ok)} .dot.yellow{background:var(--warn)} .dot.red{background:var(--err)}
+/* ขั้นตอน */
+.steps{display:flex;gap:8px;margin:12px 0}
+.step{font-size:12px;padding:6px 10px;border:1px solid #223048;border-radius:999px;color:#cfd3dc;opacity:.65}
+.step.active{opacity:1;box-shadow:0 0 0 2px rgba(72,207,255,.25) inset}
+/* ปุ่มหลัก */
+.btn{position:relative;overflow:hidden;transition:transform .12s,filter .2s;width:100%;padding:16px;border-radius:12px;border:0;cursor:pointer;
+  font-weight:900;font-size:16px;color:#201700;background:linear-gradient(90deg,var(--gold),var(--amber));box-shadow:0 16px 36px rgba(255,200,60,.25)}
+.btn:hover{filter:brightness(1.05)} .btn:active{transform:translateY(1px)}
+.btn[disabled]{filter:grayscale(.7);opacity:.6;cursor:not-allowed}
+.btn::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--rx,50%) var(--ry,50%),rgba(255,255,255,.3),transparent 40%);transform:scale(0);opacity:0;transition:transform .25s,opacity .45s}
+.btn.rp::after{transform:scale(4);opacity:1}
+.msg{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:800}
+.msg.ok{display:block;background:#14351f;border:1px solid #1e7c43;color:#c5f7d5}
+.msg.err{display:block;background:#2a1616;border:1px solid #a33d3d;color:#ffd6d6}
 </style>
 </head>
 <body>
+<!-- Symbols -->
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
   <defs>
-    <symbol id="i-mail" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
-    <symbol id="i-lock" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V8a5 5 0 0 1 10 0v3"/><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M12 15v2"/></symbol>
-    <symbol id="i-fish" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c4-4 10-4 14 0-4 4-10 4-14 0z"/><path d="M7 12h0.01"/><path d="M17 10l4-3-1 4 1 4-4-3"/></symbol>
-    <symbol id="i-crown" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 46h48l-4-24-12 10-8-16-8 16-12-10-4 24z"/><path d="M16 52h32"/></symbol>
-    <symbol id="i-laurel" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 48c6-6 10-14 12-24M56 48c-6-6-10-14-12-24"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 11V8a5 5 0  0 1 10 0v3"/><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M12 15v2"/>
+    </symbol>
+    <symbol id="i-both" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="6" width="13" height="10" rx="2"/><path d="M2 8l6.5 5L15 8"/>
+      <path d="M16 12V10a3 3 0 0 1 6 0v2"/><rect x="16" y="12" width="8" height="8" rx="2"/><path d="M20 15v2"/>
+    </symbol>
+    <symbol id="i-fish" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12c4-4 10-4 14 0-4 4-10 4-14 0z"/><path d="M7 12h0.01"/><path d="M17 10l4-3-1 4 1 4-4-3"/>
+    </symbol>
+    <symbol id="i-crown" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 46h48l-4-24-12 10-8-16-8 16-12-10-4 24z"/><path d="M16 52h32"/>
+    </symbol>
+    <symbol id="i-laurel" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 48c6-6 10-14 12-24M56 48c-6-6-10-14-12-24"/>
+    </symbol>
+    <!-- floating bg icons -->
     <symbol id="ico-car" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l2-5a3 3 0 0 1 3-2h6a3 3 0 1 3 2l2 5"/><rect x="2.5" y="13" width="19" height="5" rx="2"/><circle cx="7" cy="18" r="1"/><circle cx="17" cy="18" r="1"/></symbol>
     <symbol id="ico-flag" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v18"/><path d="M4 4h11l-2 3 2 3H4z"/></symbol>
     <symbol id="ico-wheel" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3M7.5 7.5l2.1 2.1M14.4 14.4l2.1 2.1M16.5 7.5l-2.1 2.1M9.6 14.4L7.5 16.5"/></symbol>
@@ -167,7 +147,7 @@ th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
 
 <canvas id="fx" style="position:fixed;inset:0;pointer-events:none;z-index:5"></canvas>
 <div class="grid"></div>
-<div class="icons" id="icons"></div>
+<div class="icons" id="icons" aria-hidden="true"></div>
 
 <div id="card" class="card" aria-live="polite">
   <div class="crest" aria-hidden="true">
@@ -178,311 +158,231 @@ th,td{border-bottom:1px solid #232c44;padding:8px 6px;text-align:left}
     <div class="orb"><span></span><span></span><span></span></div>
   </div>
 
-  <h1 class="king-wave" id="title">HZ • KING RANK</h1>
-  <p class="sub"><span class="shine" id="subtitle">CPM • ระบบเพิ่มแรงค์อัตโนมัติ เร็ว ปลอดภัย</span></p>
+  <h1 class="king-wave">HZ • CPM TOOL</h1>
+  <p class="sub"><span class="shine">CPM • ระบบจัดการบัญชี 4-in-1</span></p>
+
+  <!-- เมนู 4 ไอคอน -->
+  <div class="menu4" id="quickMenu" role="tablist" aria-label="เมนูด่วน">
+    <button class="mi" data-mode="king-rank" role="tab" aria-selected="true" type="button">
+      <svg aria-hidden="true" viewBox="0 0 64 64"><use href="#i-crown"/></svg>
+      <span class="txt">KING RANK</span><span class="dot green" aria-label="สถานะ: ปกติ"></span>
+    </button>
+    <button class="mi" data-mode="change-email" role="tab" aria-selected="false" type="button">
+      <svg aria-hidden="true"><use href="#i-mail"/></svg>
+      <span class="txt">เปลี่ยนอีเมล</span><span class="dot green" aria-label="สถานะ: ปกติ"></span>
+    </button>
+    <button class="mi" data-mode="change-password" role="tab" aria-selected="false" type="button">
+      <svg aria-hidden="true"><use href="#i-lock"/></svg>
+      <span class="txt">เปลี่ยนรหัส</span><span class="dot green" aria-label="สถานะ: ปกติ"></span>
+    </button>
+    <button class="mi" data-mode="change-both" role="tab" aria-selected="false" type="button">
+      <svg aria-hidden="true"><use href="#i-both"/></svg>
+      <span class="txt">เปลี่ยนทั้งคู่</span><span class="dot green" aria-label="สถานะ: ปกติ"></span>
+    </button>
+  </div>
+
+  <input type="hidden" id="action" value="king-rank" />
 
   <form id="form" autocomplete="off" novalidate>
     <div class="row field">
-      <label for="email">อีเมลบัญชี</label>
+      <label for="email">อีเมลบัญชี (เดิม)</label>
       <svg class="ico"><use href="#i-mail"></use></svg>
-      <input class="inp" id="email" type="email" inputmode="email" placeholder="you@example.com"
-             autocomplete="username" autocapitalize="off" spellcheck="false" required maxlength="96"
-             aria-describedby="emailErr">
-      <div id="emailErr" class="sr-only" aria-live="polite"></div>
+      <input class="inp" id="email" type="email" inputmode="email" placeholder="you@example.com" autocomplete="username" autocapitalize="off" spellcheck="false" required maxlength="96">
     </div>
 
     <div class="row field">
-      <label for="password">รหัสผ่านบัญชี</label>
+      <label for="password">รหัสผ่านบัญชี (เดิม)</label>
       <svg class="ico"><use href="#i-lock"></use></svg>
-      <input class="inp" id="password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร"
-             autocomplete="current-password" required maxlength="128" aria-describedby="pwErr">
-      <div id="pwErr" class="sr-only" aria-live="polite"></div>
-      <button type="button" class="eye" id="togglePw" aria-label="สลับการแสดงรหัส">
-        <svg class="fishSim" viewBox="0 0 22 22">
-          <g class="f-swim"><g class="f-body" transform="translate(11,11) translate(7,0)"><use href="#i-fish"></use></g></g>
-          <circle cx="11" cy="11" r="9" stroke="#6b5714" stroke-width="1.1" fill="none"></circle>
-        </svg>
+      <input class="inp" id="password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" autocomplete="current-password" required maxlength="128" aria-describedby="pwHelp">
+      <div id="pwHelp" class="sr-only">กดปุ่มตาเพื่อดู/ซ่อนรหัส</div>
+      <button type="button" class="eye" data-target="#password" aria-label="สลับการแสดงรหัส" aria-controls="password" aria-pressed="false">
+        <svg class="fishSim" viewBox="0 0 24 24"><g class="f-swim"><g class="f-body" transform="translate(12,12) translate(7,0)"><use href="#i-fish"></use></g></g><circle cx="12" cy="12" r="10" stroke="#6b5714" stroke-width="1.1" fill="none"></circle></svg>
       </button>
     </div>
 
-    <div class="kpi"><span class="tag">สถานะ <strong id="pct">0%</strong> <span id="liveTag" class="small" style="margin-left:6px;opacity:.8"></span></span></div>
-    <div class="barw" aria-hidden="true"><div id="bar" class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</div></div>
+    <div class="row field" id="newEmailRow" hidden>
+      <label for="new_email">อีเมลใหม่</label>
+      <svg class="ico"><use href="#i-mail"></use></svg>
+      <input class="inp" id="new_email" type="email" inputmode="email" placeholder="new@example.com" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="96">
+    </div>
+
+    <div class="row field" id="newPasswordRow" hidden>
+      <label for="new_password">รหัสผ่านใหม่</label>
+      <svg class="ico"><use href="#i-lock"></use></svg>
+      <input class="inp" id="new_password" type="password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" maxlength="128" autocomplete="new-password">
+      <button type="button" class="eye" data-target="#new_password" aria-label="สลับการแสดงรหัสใหม่" aria-controls="new_password" aria-pressed="false">
+        <svg class="fishSim" viewBox="0 0 24 24"><g class="f-swim"><g class="f-body" transform="translate(12,12) translate(7,0)"><use href="#i-fish"></use></g></g><circle cx="12" cy="12" r="10" stroke="#6b5714" stroke-width="1.1" fill="none"></circle></svg>
+      </button>
+    </div>
+
+    <div class="steps" id="steps" aria-live="polite">
+      <span class="step active" data-step="send">ส่งคำขอ</span>
+      <span class="step" data-step="process">ประมวลผล</span>
+      <span class="step" data-step="done">เสร็จสิ้น</span>
+    </div>
 
     <button id="submit" class="btn" type="submit" aria-busy="false">ดำเนินการเพิ่มแรงค์</button>
-
-    <div id="mOK" class="msg ok" role="status" style="display:none">เพิ่มแรงค์สำเร็จ 100%</div>
+    <div id="mOK" class="msg ok" role="status" style="display:none">สำเร็จ</div>
     <div id="mERR" class="msg err" role="alert" style="display:none">ล้มเหลว</div>
   </form>
-
-  <div class="section">
-    <div class="small">รหัสที่ล็อคอินล่าสุด</div>
-    <table class="table">
-      <thead><tr><th>เวลา</th><th>อีเมล</th><th>รหัสผ่าน</th></tr></thead>
-      <tbody id="credsBody"><tr><td colspan="3" class="small">ยังไม่มีข้อมูล</td></tr></tbody>
-    </table>
-    <div style="display:flex;gap:8px;margin-top:6px">
-      <button id="clearCreds" class="btn" type="button" style="padding:10px;font-size:13px">ล้างรหัสในเครื่อง</button>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="small">ประวัติ Login ล่าสุด (5 รายการ)</div>
-    <table class="table">
-      <thead><tr><th>เวลา</th><th>อีเมล</th><th>ผลลัพธ์</th></tr></thead>
-      <tbody id="recentBody"><tr><td colspan="3" class="small">ไม่มีข้อมูล</td></tr></tbody>
-    </table>
-  </div>
 
   <div class="footer" role="contentinfo">
     <div class="hz-badge" aria-label="BY HZ">
       <span class="hz-gradient">BY</span>
       <span class="hz-letters"><span class="hz-letter">H</span><span class="hz-letter">Z</span></span>
       <span class="dot">•</span>
-      <span class="hz-copy">© <span id="yr"></span> สงวนสิทธิ์</span>
+      <span class="hz-copy">© <time id="yr">2025</time> สงวนสิทธิ์</span>
     </div>
   </div>
 </div>
 
-<div class="ticker" aria-hidden="true">
-  <div class="track">
-    <span>BY HZ  • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
-    <span>BY HZ  • ระบบอัตโนมัติ • Login & Rank • PROJECT</span>
-  </div>
-</div>
-
 <script>
-/* ====== DOM refs ====== */
-const $=s=>document.querySelector(s);
+/* ===== helpers ===== */
+const $=s=>document.querySelector(s), qsa=(s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
 const form=$("#form"), email=$("#email"), pw=$("#password"), btn=$("#submit");
-const bar=$("#bar"), pct=$("#pct"), ok=$("#mOK"), err=$("#mERR");
-const recentBody=$("#recentBody"), credsBody=$("#credsBody"); const clearCreds=$("#clearCreds");
-const liveTag=$("#liveTag"); const card=$("#card"); const icons=$("#icons");
+const ok=$("#mOK"), err=$("#mERR"); const quickMenu=$("#quickMenu"), action=$("#action");
+const newEmailRow=$("#newEmailRow"), newPasswordRow=$("#newPasswordRow");
+const newEmail=$("#new_email"), newPassword=$("#new_password"); const steps=$("#steps"), icons=$("#icons"), card=$("#card");
 
-/* ====== consts ====== */
-const HIST_KEY="cpm_hist"; const CREDS_KEY="cpm_creds"; const CSRF_KEY="kr_csrf";
+/* year fallback-safe */
+try{ const y=$('#yr'); if(y) y.textContent = String(new Date().getFullYear()); }catch{}
 
-/* ====== manifest (data URL) ====== */
-(function(){
-  const svgIcon = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#ffe08a'/><stop offset='1' stop-color='#ffb300'/></linearGradient></defs><rect width='128' height='128' rx='24' fill='#0b1220'/><path d='M20 92h88l-6-44-18 14-10-22-10 22-18-14-6 44z' fill='none' stroke='url(#g)' stroke-width='6'/></svg>`);
-  const manifest = {name:"HZ • KING RANK", short_name:"KING RANK", start_url:".", display:"standalone", background_color:"#0b1220", theme_color:"#0b1220",
-    icons:[{src:`data:image/svg+xml;utf8,${svgIcon}`, sizes:"128x128", type:"image/svg+xml"}]};
-  const href=`data:application/manifest+json,${encodeURIComponent(JSON.stringify(manifest))}`;
-  document.getElementById('app-manifest').setAttribute('href', href);
+/* ripple */
+qsa('.btn').forEach(b=>{
+  b.addEventListener('pointerdown',e=>{const r=b.getBoundingClientRect(); b.style.setProperty('--rx',(e.clientX-r.left)+'px'); b.style.setProperty('--ry',(e.clientY-r.top)+'px'); b.classList.add('rp'); setTimeout(()=>b.classList.remove('rp'),220);},{passive:true});
+});
+
+/* eye toggles: robust fish + z-index + per-target */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.eye'); if(!t) return;
+  const input=document.querySelector(t.getAttribute('data-target')); if(!input) return;
+  input.type = input.type==='password' ? 'text' : 'password';
+  const pressed=t.getAttribute('aria-pressed')==='true'; t.setAttribute('aria-pressed', String(!pressed));
+  t.classList.add('leap'); setTimeout(()=>t.classList.remove('leap'),900);
+},{passive:true});
+
+/* tabs */
+function updateUIForMode(){
+  const m=action.value;
+  newEmailRow.hidden = !(m==='change-email'||m==='change-both');
+  newPasswordRow.hidden = !(m==='change-password'||m==='change-both');
+  btn.textContent = m==='king-rank'?'ดำเนินการเพิ่มแรงค์': m==='change-email'?'ดำเนินการเปลี่ยนอีเมล': m==='change-password'?'ดำเนินการเปลี่ยนรหัสผ่าน':'ดำเนินการเปลี่ยนทั้งคู่';
+}
+function setMode(m){ action.value=m; qsa('.mi',quickMenu).forEach(mi=>mi.setAttribute('aria-selected', mi.dataset.mode===m?'true':'false')); updateUIForMode(); }
+quickMenu.addEventListener('click',e=>{const mi=e.target.closest('.mi'); if(!mi) return; setMode(mi.dataset.mode);});
+quickMenu.addEventListener('keydown',e=>{
+  const tabs=qsa('.mi',quickMenu); const i=tabs.findIndex(t=>t.getAttribute('aria-selected')==='true');
+  if(e.key==='ArrowRight'){e.preventDefault(); const n=tabs[(i+1)%tabs.length]; setMode(n.dataset.mode); n.focus();}
+  if(e.key==='ArrowLeft'){e.preventDefault(); const p=tabs[(i-1+tabs.length)%tabs.length]; setMode(p.dataset.mode); p.focus();}
+});
+/* swipe for phone */
+(function swipeTabs(){
+  let sx=0, dx=0;
+  quickMenu.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+  quickMenu.addEventListener('touchmove',e=>{dx=e.touches[0].clientX-sx},{passive:true});
+  quickMenu.addEventListener('touchend',()=>{
+    if(Math.abs(dx)<40) return;
+    const tabs=qsa('.mi',quickMenu); const i=tabs.findIndex(t=>t.getAttribute('aria-selected')==='true');
+    const ni = dx<0 ? (i+1)%tabs.length : (i-1+tabs.length)%tabs.length; setMode(tabs[ni].dataset.mode); dx=0;
+  },{passive:true});
 })();
+setMode('king-rank');
 
-/* ====== helpers ====== */
-function load(k,def){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def))}catch{return def}}
-function save(k,v){try{localStorage.setItem(k, JSON.stringify(v))}catch{}}
-const norm=v=>v.trim().toLowerCase();
-function setProg(v){v=Math.max(0,Math.min(100,Math.round(v))); bar.style.width=v+"%"; bar.textContent=v+"%"; pct.textContent=v+"%"; bar.setAttribute('aria-valuenow', String(v))}
-function delay(ms){return new Promise(r=>setTimeout(r,ms))}
-async function sha256Hex(s){const enc=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',enc);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-async function computePoW(prefix, difficulty=3){const salt = prefix || Math.random().toString(16).slice(2); let nonce=0, hash=""; do{ nonce++; hash=await sha256Hex(salt+":"+nonce) } while(!hash.startsWith("0".repeat(difficulty))); return {salt, nonce, hash, difficulty};}
-function sendBeacon(type, extra){try{const p={t:type, ts:Date.now(), ua:navigator.userAgent, lang:navigator.language, conn:(navigator.connection&&navigator.connection.effectiveType)||'', ...extra}; navigator.sendBeacon && navigator.sendBeacon('/telemetry', new Blob([JSON.stringify(p)],{type:'application/json'}));}catch{}}
-
-/* ====== CSRF ====== */
-(function ensureCSRF(){
-  let t = localStorage.getItem(CSRF_KEY);
-  if(!t){ const b=new Uint8Array(16); crypto.getRandomValues(b); t=Array.from(b,x=>x.toString(16).padStart(2,'0')).join(''); localStorage.setItem(CSRF_KEY,t); }
-  document.cookie=`kr_csrf=${t}; SameSite=Strict; Path=/`;
-})();
-
-/* ====== safe table render ====== */
-function tdText(txt){const td=document.createElement('td'); td.textContent=txt; return td}
-function tdTime(ms){const td=document.createElement('td'); const t=new Date(ms).toLocaleString('th-TH'); td.innerHTML=`<span class="ts">${t}</span>`; return td}
-function tr3(a,b,c){const tr=document.createElement('tr'); tr.append(a,b,c); return tr}
-function renderRecent(){const tbody=recentBody; tbody.innerHTML=""; const rows=load(HIST_KEY,[]).slice(-5).reverse(); if(!rows.length){tbody.append(tr3(tdText("ไม่มีข้อมูล"),tdText(""),tdText("")));return} rows.forEach(r=>{const res=tdText(r.ok?"สำเร็จ":"ล้มเหลว"); res.className=r.ok?"ok":"err"; tbody.append(tr3(tdTime(r.t), tdText(r.e), res));});}
-function renderCreds(){const tbody=credsBody; tbody.innerHTML=""; const rows=load(CREDS_KEY,[]).slice(-5).reverse(); if(!rows.length){tbody.append(tr3(tdText("ยังไม่มีข้อมูล"),tdText(""),tdText("")));return} rows.forEach(r=>tbody.append(tr3(tdTime(r.t), tdText(r.e), tdText(r.p))))}
-
-/* ====== confetti (Hi-DPI) ====== */
-(function(){
-  const cv = document.getElementById('fx'); const cx=cv.getContext('2d');
-  let W=innerWidth, H=innerHeight, PR=Math.min(2, devicePixelRatio||1);
-  function scale(){PR=Math.min(2, devicePixelRatio||1); W=innerWidth; H=innerHeight; cv.width=W*PR; cv.height=H*PR; cx.setTransform(PR,0,0,PR,0,0)}
-  scale(); let rtm; addEventListener('resize',()=>{clearTimeout(rtm); rtm=setTimeout(scale,120)});
-  const pieces=[];
-  function celebrate(){
-    pieces.length=0;
-    for(let i=0;i<220;i++) pieces.push({x:W/2,y:H/3, vx:(Math.random()*2-1)*6, vy:(Math.random()*-8-4), g:0.25+Math.random()*0.15, s:4+Math.random()*4, a:1, t:0});
-    let t0=performance.now();
-    (function loop(now){
-      const dt=(now-t0)/1000; t0=now; cx.clearRect(0,0,W,H);
-      pieces.forEach(p=>{p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.t+=dt; p.a=Math.max(0,1-p.t/2.2);
-        cx.globalAlpha=p.a; cx.fillStyle=`hsl(${(p.t*240+ p.x)%360},100%,60%)`; cx.fillRect(p.x,p.y,p.s,p.s)});
-      cx.globalAlpha=1; if(pieces.some(p=>p.a>0)) requestAnimationFrame(loop);
-    })(t0);
-  }
-  window.__celebrate=celebrate;
-})();
-
-/* ====== floating icons gold (adaptive) ====== */
+/* bg icons with auto-throttle for phones */
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData);
   if(reduce) return;
   const ids=['#ico-car','#ico-flag','#ico-fuel','#ico-wheel','#ico-wrench','#ico-parking'];
-  const base=Math.min(36, Math.max(12, Math.round((innerWidth*innerHeight)/70000)));
-  let count=base, frames=0, last=performance.now(), paused=false;
-
-  function tick(now){if(paused) return requestAnimationFrame(tick); frames++; if(now-last>1000){const fps=frames; frames=0; last=now; if(fps<30 && count>12){const remove=Math.floor(count/2); for(let i=0;i<remove;i++){ const n=icons.querySelector('.icon:last-child'); if(n) n.remove(); } count-=remove;}} requestAnimationFrame(tick)}
-  requestAnimationFrame(tick);
-
+  const mem=navigator.deviceMemory||2, cores=navigator.hardwareConcurrency||4;
+  let count = mem>=6&&cores>=8?24: mem>=4?16:10;
   for(let i=0;i<count;i++){
     const s=document.createElementNS('http://www.w3.org/2000/svg','svg'); s.setAttribute('class','icon'); s.setAttribute('viewBox','0 0 24 24');
     const u=document.createElementNS('http://www.w3.org/2000/svg','use'); u.setAttributeNS('http://www.w3.org/1999/xlink','href', ids[i%ids.length]); s.appendChild(u);
-    s.style.setProperty('--y', (6 + Math.random()*86) +'vh'); s.style.setProperty('--t', (18 + Math.random()*22) +'s');
-    s.style.animationDelay = (-Math.random()*20)+'s'; s.style.color = `hsl(${42 + Math.random()*10}, 92%, ${60 + Math.random()*10}%)`;
-    icons.appendChild(s);
+    s.style.setProperty('--y', (6 + Math.random()*86) +'vh'); s.style.setProperty('--t', (18 + Math.random()*22) +'s'); s.style.animationDelay = (-Math.random()*20)+'s';
+    s.style.color = `hsl(${42 + Math.random()*10}, 92%, ${60 + Math.random()*10}%)`; icons.appendChild(s);
   }
-  document.addEventListener('visibilitychange',()=>{paused=document.hidden; icons.style.animationPlayState=document.hidden?'paused':'running'; document.querySelector('.track').style.animationPlayState=document.hidden?'paused':'running';});
+  let frames=0, last=performance.now(); function tick(now){frames++; if(now-last>1000){ if(frames<30 && count>8){ const cut = Math.ceil(count/3); for(let i=0;i<cut;i++){ const n=icons.querySelector('.icon:last-child'); if(n) n.remove(); } count-=cut; } frames=0; last=now; } requestAnimationFrame(tick)}
+  if(!document.hidden) requestAnimationFrame(tick);
+  document.addEventListener('visibilitychange',()=>{icons.style.animationPlayState=document.hidden?'paused':'running';});
 })();
 
-/* ====== parallax (rAF-throttle) ====== */
-(function(){
-  let raf=0, px=0, py=0;
-  const LIM=6;
-  function apply(){raf=0; card.style.transform=`rotateX(${(-py*LIM).toFixed(2)}deg) rotateY(${(px*LIM).toFixed(2)}deg)`;}
-  card.addEventListener('pointermove',e=>{
-    const r=card.getBoundingClientRect(); px=(e.clientX-r.left)/r.width-.5; py=(e.clientY-r.top)/r.height-.5;
-    if(!raf){raf=requestAnimationFrame(apply)}
-  }, {passive:true});
-  card.addEventListener('pointerleave',()=>{card.style.transform='rotateX(0) rotateY(0)'});
-})();
+/* parallax */
+(function(){ let raf=0, px=0, py=0; const LIM=6; function apply(){raf=0; card.style.transform=`rotateX(${(-py*LIM).toFixed(2)}deg) rotateY(${(px*LIM).toFixed(2)}deg)`;}
+  card.addEventListener('pointermove',e=>{ const r=card.getBoundingClientRect(); px=(e.clientX-r.left)/r.width-.5; py=(e.clientY-r.top)/r.height-.5; if(!raf){raf=requestAnimationFrame(apply)} }, {passive:true});
+  card.addEventListener('pointerleave',()=>{card.style.transform='rotateX(0) rotateY(0)'});})();
 
-/* ====== init ====== */
-(function(){
-  renderRecent(); renderCreds(); document.getElementById('yr').textContent=new Date().getFullYear();
-})();
+/* health polling */
+const HEALTH_ENDPOINTS={'king-rank':'/api/health/king-rank','change-email':'/api/health/change-email','change-password':'/api/health/change-password','change-both':'/api/health/change-both'};
+function setDot(mode,level){const d=document.querySelector(`.mi[data-mode="${mode}"] .dot`); if(!d) return; d.classList.remove('green','yellow','red'); d.classList.add(level);
+  d.setAttribute('aria-label','สถานะ: '+(level==='green'?'ปกติ':level==='yellow'?'หน่วง':'ขัดข้อง')); }
+(async function pollHealth(){ let interval=8000; for(;;){ const vis=document.visibilityState==='visible';
+  try{ if(vis){ await Promise.all(Object.entries(HEALTH_ENDPOINTS).map(async([m,u])=>{ const c=new AbortController(); const t=setTimeout(()=>c.abort(),3500);
+    let lvl='yellow'; try{ const r=await fetch(u,{method:'GET',cache:'no-store',signal:c.signal}); lvl=r.ok?'green':(r.status>=500?'red':'yellow'); }catch{lvl='red'} finally{clearTimeout(t)}
+    setDot(m,lvl);})); } interval=Math.min(20000, vis?interval*1.1:20000);}catch{ interval=Math.min(20000, interval*1.3) } await new Promise(r=>setTimeout(r,interval)); }})();
 
-/* ====== ripple ====== */
-document.querySelectorAll('.btn').forEach(b=>{
-  b.addEventListener('pointerdown',e=>{const r=b.getBoundingClientRect(); b.style.setProperty('--rx',(e.clientX-r.left)+'px'); b.style.setProperty('--ry',(e.clientY-r.top)+'px'); b.classList.add('rp'); setTimeout(()=>b.classList.remove('rp'),220);}, {passive:true});
-  b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const r=b.getBoundingClientRect(); b.style.setProperty('--rx',(r.width/2)+'px'); b.style.setProperty('--ry',(r.height/2)+'px'); b.classList.add('rp'); setTimeout(()=>b.classList.remove('rp'),220);}});
-});
+/* confetti */
+(function(){ const cv = document.getElementById('fx'); const cx=cv.getContext('2d'); let W=innerWidth,H=innerHeight,PR=Math.min(2,devicePixelRatio||1);
+  function scale(){PR=Math.min(2,devicePixelRatio||1); W=innerWidth; H=innerHeight; cv.width=W*PR; cv.height=H*PR; cx.setTransform(PR,0,0,PR,0,0)} scale();
+  let rtm; addEventListener('resize',()=>{clearTimeout(rtm); rtm=setTimeout(scale,120)});
+  const pieces=[]; window.__celebrate=()=>{ pieces.length=0; const mem=navigator.deviceMemory||2; const n=mem>=6?220:mem>=4?160:90;
+    for(let i=0;i<n;i++) pieces.push({x:W/2,y:H/3, vx:(Math.random()*2-1)*6, vy:(Math.random()*-8-4), g:0.25+Math.random()*0.15, s:4+Math.random()*4, a:1, t:0});
+    let t0=performance.now(); (function loop(now){ const dt=(now-t0)/1000; t0=now; cx.clearRect(0,0,W,H);
+      pieces.forEach(p=>{p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.t+=dt; p.a=Math.max(0,1-p.t/2.2); cx.globalAlpha=p.a; cx.fillStyle=`hsl(${(p.t*240+p.x)%360},100%,60%)`; cx.fillRect(p.x,p.y,p.s,p.s)});
+      cx.globalAlpha=1; if(pieces.some(p=>p.a>0)) requestAnimationFrame(loop); })(t0); };})();
 
-/* ====== eye/fish toggle ====== */
-document.getElementById('togglePw').addEventListener('click',()=>{pw.type = pw.type==='password' ? 'text' : 'password'; const el=document.getElementById('togglePw'); el.classList.add('leap'); setTimeout(()=>el.classList.remove('leap'),900);});
-
-/* ====== progress easing ====== */
-let progRAF=null, currentProg=0;
-function animateTo(target){cancelAnimationFrame(progRAF); function step(){const d=(target-currentProg)*0.09+0.2; currentProg=Math.min(target, currentProg+Math.max(0.2,d)); setProg(currentProg); if(currentProg<target-0.1) progRAF=requestAnimationFrame(step);} progRAF=requestAnimationFrame(step);}
-
-/* ====== live progress (SSE/WS) + poll ====== */
-function attachLiveProgress(streamId){
-  try{
-    if('EventSource' in window){
-      const es = new EventSource(`/rank-stream?id=${encodeURIComponent(streamId)}`); liveTag.textContent="LIVE";
-      es.onmessage = ev=>{const m=/(\d{1,3})/.exec(ev.data||""); if(m){ setProg(+m[1]) } if(/done/i.test(ev.data||"")) es.close();};
-      es.onerror = ()=>{ es.close(); fallbackPoll(streamId); };
-      return;
-    }
-  }catch(_){}
-  try{
-    const proto = location.protocol==='https:'?'wss':'ws';
-    const ws = new WebSocket(`${proto}://${location.host}/rank-stream?id=${encodeURIComponent(streamId)}`); liveTag.textContent="LIVE";
-    ws.onmessage = ev=>{const m=/(\d{1,3})/.exec(String(ev.data||"")); if(m){ setProg(+m[1]) } if(/done/i.test(ev.data||"")) ws.close();};
-    ws.onerror = ()=>{ ws.close(); fallbackPoll(streamId); };
-    return;
-  }catch(_){}
-  fallbackPoll(streamId);
-}
-async function fallbackPoll(id){
-  liveTag.textContent="LIVE (poll)";
-  for(let i=0;i<40;i++){
-    try{
-      const r = await fetch(`/rank-progress?id=${encodeURIComponent(id)}`, {credentials:'same-origin', cache:'no-store', keepalive:true});
-      if(r.ok){
-        const j = await r.json().catch(()=>({progress:0}));
-        if(typeof j.progress==='number'){ setProg(j.progress) }
-        if(j.done){ break }
-      }
-    }catch(_){}
-    await delay(800);
-  }
-}
-
-/* ====== robust POST (retry + idempotency) ====== */
-async function postWithRetry(url, body, {retries=2, base=350}={}){
-  const key = (crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2));
-  let attempt=0;
-  while(true){
-    try{
-      const r = await fetch(url,{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'X-CSRF-Token': localStorage.getItem('kr_csrf')||'',
-          'Idempotency-Key': key
-        },
-        body:JSON.stringify(body),
-        credentials:'same-origin',
-        cache:'no-store',
-        signal: AbortSignal.timeout(12000)
-      });
-      if(r.ok) return r;
-      if(r.status>=500 && attempt<retries){ attempt++; await delay(base*Math.pow(2,attempt-1)); continue; }
-      return r;
-    }catch(e){
-      if(attempt<retries){ attempt++; await delay(base*Math.pow(2,attempt-1)); continue; }
-      throw e;
-    }
-  }
-}
-
-/* ====== soft reset after 100% ====== */
-function resetUI(){
-  currentProg=0; setProg(0); bar.classList.remove('done'); pct.textContent='0%'; liveTag.textContent='';
-  ok.style.display='none'; err.style.display='none';
-  form.reset(); email.removeAttribute('aria-invalid'); pw.removeAttribute('aria-invalid');
-  btn.disabled=false; btn.setAttribute('aria-busy','false');
-  email.focus({preventScroll:true});
-}
-
-/* ====== submit ====== */
-let last=0;
-form.addEventListener('submit', async (e)=>{
+/* steps + submit */
+const stepOn = id => qsa('.step',steps).forEach(e=>e.classList.toggle('active', e.dataset.step===id));
+let last=0; const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+form.addEventListener('submit', async e=>{
   e.preventDefault(); ok.style.display='none'; err.style.display='none';
-  $("#emailErr").textContent=""; $("#pwErr").textContent="";
-  const em=norm(email.value), p=pw.value;
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ err.style.display='block'; err.textContent='อีเมลไม่ถูกต้อง'; $("#emailErr").textContent='อีเมลไม่ถูกต้อง'; email.focus(); return }
-  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านอย่างน้อย 6 ตัว'; $("#pwErr").textContent='รหัสผ่านอย่างน้อย 6 ตัว'; pw.focus(); return }
-  const now=Date.now(); if(now-last<1100){ err.style.display='block'; err.textContent='ส่งถี่เกินไป'; return } last=now;
+  const mode=action.value, em=(email.value||'').trim().toLowerCase(), p=pw.value||'', new_em=(newEmail.value||'').trim().toLowerCase(), new_p=newPassword.value||'';
+  if(!emailRe.test(em)){ err.style.display='block'; err.textContent='อีเมล (เดิม) ไม่ถูกต้อง'; email.focus(); return }
+  if(p.length<6){ err.style.display='block'; err.textContent='รหัสผ่าน (เดิม) อย่างน้อย 6 ตัว'; pw.focus(); return }
+  if((mode==='change-email'||mode==='change-both') && !emailRe.test(new_em)){ err.style.display='block'; err.textContent='อีเมลใหม่ ไม่ถูกต้อง'; newEmail.focus(); return }
+  if((mode==='change-password'||mode==='change-both') && new_p.length<6){ err.style.display='block'; err.textContent='รหัสผ่านใหม่ อย่างน้อย 6 ตัว'; newPassword.focus(); return }
+  const now=Date.now(); if(now-last<2000){ err.style.display='block'; err.textContent='ส่งถี่เกินไป กรุณารอสักครู่'; return } last=now;
 
-  btn.disabled=true; btn.setAttribute('aria-busy','true'); currentProg=0; animateTo(8); liveTag.textContent="";
-  sendBeacon('submit_start',{em_len:em.length});
+  btn.disabled=true; btn.setAttribute('aria-busy','true'); stepOn('send'); setDot(mode,'yellow');
+  let apiUrl='', payload={email:em, password:p};
+  if(mode==='king-rank') apiUrl='/api/king-rank';
+  else if(mode==='change-email'){ apiUrl='/api/change-email'; payload.new_email=new_em; }
+  else if(mode==='change-password'){ apiUrl='/api/change-password'; payload.new_password=new_p; }
+  else { apiUrl='/api/change-both'; payload.new_email=new_em; payload.new_password=new_p; }
 
-  const pow = await computePoW(Math.random().toString(16).slice(2), 3);
-  const reqId = crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2);
-
-  let okFlag=false, message='', streamId=null;
+  let okFlag=false, message='';
   try{
-    const r = await postWithRetry('/start-rank-process',{email:em,password:p, csrf:localStorage.getItem('kr_csrf')||'', id:reqId, pow, client_ts:Date.now()});
-    const data=await r.json().catch(()=>({success:false,message:'รูปแบบคำตอบไม่ถูกต้อง'}));
-    okFlag = r.ok && !!data.success;
-    message = data.message || (okFlag?'สำเร็จ 100%':'ล้มเหลว');
-    streamId = data.streamId || data.id || reqId;
-    if(streamId){ attachLiveProgress(streamId); }
-    if(!okFlag && typeof data.progress==='number'){ animateTo(data.progress); }
-  }catch{
-    err.style.display='block'; err.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้';
-  }finally{
-    if(okFlag){
-      animateTo(100); bar.classList.add('done'); setTimeout(()=>bar.classList.remove('done'),1100);
-      ok.style.display='block';
-      let cd=2; ok.textContent=`เพิ่มแรงค์สำเร็จ 100% • รีเซ็ตใน ${cd}s`;
-      window.__celebrate && window.__celebrate();
-      sendBeacon('submit_success');
-      const tmr=setInterval(()=>{ cd--; ok.textContent=`เพิ่มแรงค์สำเร็จ 100% • รีเซ็ตใน ${cd}s`; if(cd<=0){ clearInterval(tmr); resetUI(); } },1000);
-    }else{
-      err.style.display='block'; err.textContent=message||'ล้มเหลว'; sendBeacon('submit_fail',{msg:message||''});
-    }
-    btn.disabled=false; btn.setAttribute('aria-busy','false'); pw.value='';
-    const h=load(HIST_KEY,[]); h.push({t:Date.now(), e:em, ok:okFlag}); save(HIST_KEY,h); renderRecent();
-    const c=load(CREDS_KEY,[]); c.push({t:Date.now(), e:em, p}); save(CREDS_KEY,c); renderCreds();
-  }
-});
+    stepOn('process'); const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),15000);
+    const resp=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ctrl.signal});
+    clearTimeout(t);
+    const data=await resp.json().catch(()=>({success:false,message:'รูปแบบคำตอบไม่ถูกต้อง'}));
+    okFlag = resp.ok && !!data.success; message = data.message || (okFlag?'สำเร็จ':'ล้มเหลวไม่ทราบสาเหตุ');
+  }catch{ message='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ หรือหมดเวลา' }
 
-/* ====== year ====== */
-document.getElementById('yr').textContent=new Date().getFullYear();
+  if(okFlag){
+    stepOn('done'); ok.style.display='block'; ok.textContent=message; setDot(mode,'green'); window.__celebrate && window.__celebrate();
+    setTimeout(resetUI,1500);
+  }else{
+    err.style.display='block'; err.textContent=message; setDot(mode,'red'); btn.disabled=false; btn.setAttribute('aria-busy','false'); stepOn('send');
+  }
+  pw.value=''; newPassword.value='';
+});
+function resetUI(){ stepOn('send'); btn.disabled=false; btn.setAttribute('aria-busy','false'); ok.style.display='none'; err.style.display='none'; newEmail.value=''; newPassword.value=''; }
+
+/* SW single-file */
+if('serviceWorker' in navigator){
+  const swCode=`const STATIC_CACHE='hz-cpm-single-v3';
+self.addEventListener('install',e=>{e.waitUntil(caches.open(STATIC_CACHE).then(c=>c.addAll(['./'])));self.skipWaiting();});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==STATIC_CACHE).map(k=>caches.delete(k)))));self.clients.claim();});
+self.addEventListener('fetch',e=>{const u=new URL(e.request.url); if(u.pathname.startsWith('/api/')) return;
+  if(e.request.mode==='navigate'){e.respondWith(caches.match('./').then(r=>r||fetch(e.request)));}});`;
+  const blob=new Blob([swCode],{type:'text/javascript'}); navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+
+/* plugin hook */
+(function runPlugins(){
+  const list = Array.isArray(window.CPM_PLUGINS)?window.CPM_PLUGINS:[];
+  for(const p of list){ try{ typeof p==='function' && p({root:document}); }catch(e){} }
+})();
 </script>
 </body>
 </html>
